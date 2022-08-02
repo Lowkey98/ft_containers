@@ -14,17 +14,20 @@ namespace ft
                 ptr = v;
             }
             value_type operator *() {return *ptr;}
-            value_type operator ++()
+            value_type operator ++(int n)
             {
+                (void)n;
                 ptr++;
                 return (*ptr);
             }
-            bool operator !=(iterator &rhs)
-            {
-                return (ptr != rhs.get_ptr());
-            }
+
             value_type *get_ptr() const{return ptr;}
         private:
             value_type *ptr;
     };
+    template <class iterator>
+    bool operator !=(const iterator &lhs, const iterator &rhs)
+    {
+        return (lhs.get_ptr() != rhs.get_ptr());
+    }
 }

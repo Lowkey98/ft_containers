@@ -102,7 +102,7 @@ namespace ft
             {
                 return (iterator(&_buff[0]));
             }
-            iterator end() {return (iterator(&_buff[_size - 1]));};
+            iterator end() {return (iterator(&_buff[_size]));};
         // class iterator;
 		
         private:

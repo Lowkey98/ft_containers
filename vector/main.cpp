@@ -105,12 +105,10 @@ int main ()
 //     std::cout << ' ' << myvector[i];
 //   std::cout << '\n';
     ft::vector<int> v;
-    v.push_back(1);
-    v.push_back(2);
-    v.push_back(3);
-    ft::vector<int>::iterator a = v.begin();
+    v.push_back(100);
+    v.push_back(333);
+    v.push_back(555);
     // ft::vector<int>::iterator i = v.begin();
-    std::cout << *a;
     for (ft::vector<int>::iterator i = v.begin(); i != v.end(); i++)
     {
         std::cout << *i << std::endl;
