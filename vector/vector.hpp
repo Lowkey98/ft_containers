@@ -1,8 +1,8 @@
+#pragma once
 #include <iostream>
-
+#include "iterator.hpp"
 namespace ft
 {
-	
 	template <class T, class Allocator = std::allocator<T> >  
 	class vector
 	{
@@ -10,6 +10,7 @@ namespace ft
             typedef T value_type;
             typedef T& reference;
             typedef std::size_t size_type;
+            typedef ft::iterator<T> iterator;
 		public:
 			vector() :_size(0) ,_capacity(0), _buff(NULL) {};
 			size_type size(){ return _size;}
@@ -60,6 +61,7 @@ namespace ft
             }
 
             reference back(){ return (_buff[_size - 1]);}
+            reference front(){ return (_buff[0]);}
             
             void resize(size_type n, value_type val = value_type())
             {
@@ -94,8 +96,16 @@ namespace ft
                     _allocator.destroy(&_buff[i]);
                 _size = n;
             }
+            bool empty() const {return _size == 0;}
             reference operator[](size_type n){ return (_buff[n]);}
-		private:
+            iterator begin() 
+            {
+                return (iterator(&_buff[0]));
+            }
+            iterator end() {return (iterator(&_buff[_size - 1]));};
+        // class iterator;
+		
+        private:
 			Allocator	_allocator;
 			size_type _size;
 			size_type _capacity;
