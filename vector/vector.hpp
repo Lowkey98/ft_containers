@@ -81,6 +81,19 @@ namespace ft
                 }
                 _size = n;
             }
+            void assign(size_type n, const value_type& val)
+            {
+                if (n > _capacity)
+                    this->reserve(n);
+                for (size_type i = 0; i < n; i++)
+                {
+                    _allocator.destroy(&_buff[i]);
+                    _allocator.construct(&_buff[i], val);
+                }
+                for (size_type i = n; i < _size; i++)
+                    _allocator.destroy(&_buff[i]);
+                _size = n;
+            }
             reference operator[](size_type n){ return (_buff[n]);}
 		private:
 			Allocator	_allocator;

@@ -104,16 +104,14 @@ int main ()
 //   for (size_t i=0;i<myvector.size();i++)
 //     std::cout << ' ' << myvector[i];
 //   std::cout << '\n';
-    std::vector<int> a;
+    ft::vector<int> a;
     a.resize(8,1);
     pr(a);
-    a.push_back(2);
+    a.assign(3,2);
     pr(a);
-    a.resize(10,3);
+    a.assign(10,3);
     pr(a);
-    a.resize(16,4);
-    pr(a);
-    a.resize(2,5);
+    a.assign(0,4);
     pr(a);
     return 0;
 }
