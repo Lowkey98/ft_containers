@@ -19,6 +19,7 @@ namespace ft
             {
                 if (n > _capacity)
                 {
+                    value_type* 			_tmp;
                     size_type old_capacity = _capacity;
                     _capacity = n;
                      // fill tmp with buff content
@@ -31,11 +32,7 @@ namespace ft
                     if (_buff)
                         _allocator.deallocate(_buff, old_capacity);
                     // fill buff
-                    _buff = _allocator.allocate(_capacity);
-                    for (size_type i = 0; i < _size; i++)
-                        _allocator.construct(&_buff[i], _tmp[i]);
-                    // deallocate tmp
-                    _allocator.deallocate(_tmp, old_capacity);
+                    _buff = _tmp; 
                 }
             }
 			void	push_back(value_type value)
@@ -90,6 +87,5 @@ namespace ft
 			size_type _size;
 			size_type _capacity;
 			value_type* 			_buff;
-			value_type* 			_tmp;
 	};
 }
