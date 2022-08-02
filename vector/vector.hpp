@@ -68,7 +68,7 @@ namespace ft
                     for (size_type i = n; i < _size; i++)
                         _allocator.destroy(&_buff[i]);
                 }
-                else if (n > _size && n < _capacity)
+                else if (n > _size && n <= _capacity)
                 {
                     for (size_type i = _size; i < n; i++)
                         _allocator.construct(&_buff[i], val);
