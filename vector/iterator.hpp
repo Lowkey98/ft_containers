@@ -7,20 +7,26 @@ namespace ft
     {
         public:
             typedef T value_type;
-        
+    
         public:
+            iterator(){};
             iterator(value_type *v)
             {
                 ptr = v;
             }
-            value_type operator *() {return *ptr;}
+            value_type& operator *() {return *ptr;}
             value_type operator ++(int n)
             {
                 (void)n;
                 ptr++;
                 return (*ptr);
             }
-
+            value_type operator --(int n)
+            {
+                (void)n;
+                ptr--;
+                return (*ptr);
+            }
             value_type *get_ptr() const{return ptr;}
         private:
             value_type *ptr;

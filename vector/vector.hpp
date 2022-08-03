@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "iterator.hpp"
+#include <iterator>
 namespace ft
 {
 	template <class T, class Allocator = std::allocator<T> >  
@@ -24,14 +25,14 @@ namespace ft
                     size_type old_capacity = _capacity;
                     _capacity = n;
                      // fill tmp with buff content
-                    _tmp = _allocator.allocate(old_capacity);
+                    _tmp = _allocator.allocate(n);
                     for (size_type i = 0; i < _size; i++)
                         _allocator.construct(&_tmp[i], _buff[i]);
                     // destroy and deallocate buff
                     for (size_type i = 0; i < _size; i++)
                         _allocator.destroy(&_buff[i]);
-                    if (_buff)
-                        _allocator.deallocate(_buff, old_capacity);
+                    // if (_buff)
+                    _allocator.deallocate(_buff, old_capacity);
                     // fill buff
                     _buff = _tmp; 
                 }
@@ -122,6 +123,28 @@ namespace ft
                 return (iterator(&_buff[0]));
             }
             iterator end() {return (iterator(&_buff[_size]));};
+            iterator insert(iterator position, const value_type &val)
+            {
+                int dis = 0;
+                while(end() != position)
+                {
+                    position++;
+                    dis++;
+                }
+                if (_capacity == _size)
+                    this->reserve(_capacity * 2);
+                iterator i = this->end();
+                iterator tmp;
+                while(dis--)
+                {   
+                    tmp = i;
+                    i--;
+                    *tmp = *i;
+                }
+                *i = val;
+                _size++;
+                return position;
+            }
         // class iterator;
 		
         private:
