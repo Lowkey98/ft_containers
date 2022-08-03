@@ -112,6 +112,11 @@ namespace ft
                 x._size = _size_tmp;
                 x._capacity = _capacity_tmp; 
             }
+            void    clear()
+            {
+                while(_size)
+                    this->pop_back();
+            }
             iterator begin() 
             {
                 return (iterator(&_buff[0]));

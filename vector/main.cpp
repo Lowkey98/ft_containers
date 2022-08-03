@@ -105,14 +105,10 @@ int main ()
 //     std::cout << ' ' << myvector[i];
 //   std::cout << '\n';
     ft::vector<int> v1;
-    ft::vector<int> v2;
     v1.assign(3,10);
     pr(v1);
-    v2.assign(10,3);
-    pr(v2);
-    v1.swap(v2);
+    v1.clear();
     pr(v1);
-    pr(v2);
 
     return 0;
 }
