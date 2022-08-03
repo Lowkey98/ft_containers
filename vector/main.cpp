@@ -104,14 +104,15 @@ int main ()
 //   for (size_t i=0;i<myvector.size();i++)
 //     std::cout << ' ' << myvector[i];
 //   std::cout << '\n';
-    ft::vector<int> v;
-    v.push_back(100);
-    v.push_back(333);
-    v.push_back(555);
-    // ft::vector<int>::iterator i = v.begin();
-    for (ft::vector<int>::iterator i = v.begin(); i != v.end(); i++)
-    {
-        std::cout << *i << std::endl;
-    }
+    ft::vector<int> v1;
+    ft::vector<int> v2;
+    v1.assign(3,10);
+    pr(v1);
+    v2.assign(10,3);
+    pr(v2);
+    v1.swap(v2);
+    pr(v1);
+    pr(v2);
+
     return 0;
 }

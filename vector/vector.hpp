@@ -98,6 +98,20 @@ namespace ft
             }
             bool empty() const {return _size == 0;}
             reference operator[](size_type n){ return (_buff[n]);}
+            void    swap(vector&x)
+            {
+                value_type*_buff_tmp = this->_buff;
+                size_type _size_tmp = this->_size;
+                size_type _capacity_tmp = this->_capacity;
+
+                this->_buff = x._buff;
+                this->_size = x._size; 
+                this->_capacity = x._capacity;
+
+                x._buff = _buff_tmp;
+                x._size = _size_tmp;
+                x._capacity = _capacity_tmp; 
+            }
             iterator begin() 
             {
                 return (iterator(&_buff[0]));
