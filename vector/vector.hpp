@@ -1,9 +1,9 @@
 #pragma once
 #include <iostream>
 #include "iterator.hpp"
-#include <iterator>
 namespace ft
 {
+    #include "helper.hpp"
 	template <class T, class Allocator = std::allocator<T> >  
 	class vector
 	{
@@ -125,25 +125,15 @@ namespace ft
             iterator end() {return (iterator(&_buff[_size]));};
             iterator insert(iterator position, const value_type &val)
             {
-                int dis = 0;
-                while(end() != position)
-                {
-                    position++;
-                    dis++;
-                }
+                int dis = ft::distance(end(), position);
+                iterator end = this->end();
                 if (_capacity == _size)
                     this->reserve(_capacity * 2);
-                iterator i = this->end();
-                iterator tmp;
-                while(dis--)
-                {   
-                    tmp = i;
-                    i--;
-                    *tmp = *i;
-                }
-                *i = val;
+                for (int i = 0; i != dis; i++)
+                    *(end - i) = *(end  - i - 1);
+                _allocator.construct(&(*(end - dis)), val);
                 _size++;
-                return position;
+                return end - dis;
             }
         // class iterator;
 		

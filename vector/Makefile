@@ -1,5 +1,5 @@
 CC = c++
-SRC = main.cpp vector.cpp
+SRC = main.cpp
 FLAGS = -Wall -Wextra -Werror -std=c++98
 NAME = vector
 

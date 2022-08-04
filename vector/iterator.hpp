@@ -28,9 +28,18 @@ namespace ft
                 return (*ptr);
             }
             value_type *get_ptr() const{return ptr;}
+            iterator operator-(int n)
+            {
+                return(iterator(this->get_ptr() - n));
+            }
+            iterator operator+(int n)
+            {
+                return(iterator(this->get_ptr() + n));
+            }
         private:
             value_type *ptr;
     };
+
     template <class iterator>
     bool operator !=(const iterator &lhs, const iterator &rhs)
     {

@@ -109,19 +109,17 @@ int main ()
     v.push_back(1);
     v.push_back(2);
     v.push_back(3);
-    // ft::vector<int>::iterator i = v.begin();
-    // for (ft::vector<int>::iterator i = v.end(); i != v.begin(); i--)
+    // std::vector<int>::iterator i = v.begin();
+    // for (std::vector<int>::iterator i = v.end(); i != v.begin(); i--)
     // {
     //     std::cout << *i << std::endl;
     // }
     // std::cout << v.end() - v.begin() << std::endl;
     pr(v);
     v.insert(v.begin(),4);
-    v.insert(v.begin(),4);
-    v.insert(v.end(),6);
-    v.insert(v.end(),6);
-    v.insert(v.end(),6);
-    v.insert(v.end(),6);
+    v.insert(v.end(),5);
     pr(v);
+    std::cout << "distance: " << ft::distance(v.end(), v.begin()) << std::endl;
+    std::cout << *(v.end() + -1) << std::endl;
     return 0;
 }
