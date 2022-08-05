@@ -105,18 +105,36 @@ int main ()
 //   for (size_t i=0;i<myvector.size();i++)
 //     std::cout << ' ' << myvector[i];
 //   std::cout << '\n';
-    ft::vector<int> v1;
+    // v1.push_back(1);
+    // v1.insert(v1.begin(),6,6);
+    // v1.reserve(8);
+    // pr(v1);
+    // v1.insert(v1.begin(),9,6);
+    // pr(v1);
+    
+    // v1.push_back(1);
+    // v1.reserve(10);
+
+    // v1.insert(v1.begin(),1,3);
+    // v1.insert(v1.begin(),6);
+
     ft::vector<int> v2;
-    v1.insert(v1.begin(),5,5);
-    v2.insert(v2.begin(),3,3);
+    ft::vector<int> v1;
+    v1.push_back(1);
+    v1.push_back(1);
+    v1.push_back(1);
+    v1.insert(v1.end(),3,7);
+    pr(v1);
+    v2.insert(v2.begin(),11,3);
     v1.insert(v1.begin() + 2, v2.begin(),v2.end());
+    pr(v1);
+    // v1.erase(v1.begin() + 2);
     // std::vector<int>::iterator i = v.begin();
     // for (std::vector<int>::iterator i = v.end(); i != v.begin(); i--)
     // {
     //     std::cout << *i << std::endl;
     // }
     // std::cout << v.end() - v.begin() << std::endl;
-    pr(v1);
     // v.insert(v.end(), 2);
     // v.insert(v.end(), 2);
 

@@ -144,6 +144,8 @@ namespace ft
             void insert(iterator position, size_type n, const value_type& val)
             {
                 int dis = distance(end(), position);
+                if (_size + n > _capacity * 2)
+                    reserve(_size + n);
                 while (n--)
                     insert(end() - dis, val);
             }
@@ -151,9 +153,21 @@ namespace ft
             void insert (iterator position, iterator first, iterator last)
             {
                 int dis = distance(end(), position);
+                int n = distance(last, first);
+                // std::cout << dis << std::endl;
+                if (_size + n > _capacity * 2)
+                    reserve(_size + n);              
                 for (iterator i = first; i != last; i++)
                     insert(end() - dis, *first);
-            }		
+            }
+            iterator    erase(iterator position)
+            {
+                // _allocator.destroy(*position);
+                for (iterator i = position; i != end(); i++)
+                    *i = *(i + 1);
+                _size--;
+                return (position);                    
+            }
         private:
 			Allocator	_allocator;
 			size_type _size;
