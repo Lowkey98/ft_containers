@@ -147,8 +147,13 @@ namespace ft
                 while (n--)
                     insert(end() - dis, val);
             }
-        // class iterator;
-		
+            // template <class InputIterator>
+            void insert (iterator position, iterator first, iterator last)
+            {
+                int dis = distance(end(), position);
+                for (iterator i = first; i != last; i++)
+                    insert(end() - dis, *first);
+            }		
         private:
 			Allocator	_allocator;
 			size_type _size;
