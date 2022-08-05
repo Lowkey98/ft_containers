@@ -125,16 +125,30 @@ namespace ft
             iterator end() {return (iterator(&_buff[_size]));};
             iterator insert(iterator position, const value_type &val)
             {
+                if (_capacity == 0)
+                {
+                    push_back(val);
+                    return (begin());
+                }
                 int dis = ft::distance(end(), position);
+                // std::cout << dis << std::endl;
                 iterator end = this->end();
                 if (_capacity == _size)
                     this->reserve(_capacity * 2);
                 for (int i = 0; i != dis; i++)
-                    *(end - i) = *(end  - i - 1);
-                _allocator.construct(&(*(end - dis)), val);
+                    _buff[_size - i] = _buff[_size - i - 1];
+                _allocator.construct(&_buff[_size - dis], val);
                 _size++;
                 return end - dis;
             }
+            // void insert(iterator position, size_type n, const value_type& val)
+            // {
+            //     iterator a = position;
+            //     while (n--)
+            //     {
+            //         a = insert(a, val);
+            //     }
+            // }
         // class iterator;
 		
         private:
