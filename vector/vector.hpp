@@ -139,16 +139,14 @@ namespace ft
                     _buff[_size - i] = _buff[_size - i - 1];
                 _allocator.construct(&_buff[_size - dis], val);
                 _size++;
-                return end - dis;
+                return iterator(end - dis);
             }
-            // void insert(iterator position, size_type n, const value_type& val)
-            // {
-            //     iterator a = position;
-            //     while (n--)
-            //     {
-            //         a = insert(a, val);
-            //     }
-            // }
+            void insert(iterator position, size_type n, const value_type& val)
+            {
+                int dis = distance(end(), position);
+                while (n--)
+                    insert(end() - dis, val);
+            }
         // class iterator;
 		
         private:

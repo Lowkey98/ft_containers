@@ -105,10 +105,7 @@ int main ()
 //   for (size_t i=0;i<myvector.size();i++)
 //     std::cout << ' ' << myvector[i];
 //   std::cout << '\n';
-    std::vector<int> v;
-    // v.push_back(1);
-    // v.push_back(2);
-    // v.push_back(3);
+    ft::vector<int> v;
     // std::vector<int>::iterator i = v.begin();
     // for (std::vector<int>::iterator i = v.end(); i != v.begin(); i--)
     // {
@@ -116,9 +113,13 @@ int main ()
     // }
     // std::cout << v.end() - v.begin() << std::endl;
     pr(v);
-    v.insert(v.end(),4);
-    v.insert(v.end(),4);
-    // v.insert(v.end(),5);
+    // v.insert(v.end(), 2);
+    // v.insert(v.end(), 2);
+
+    v.insert(v.begin(),2, 5);
+    v.insert(v.begin() + 1,2, 10);
+
+    v.insert(v.end(),5);
     pr(v);
     // std::cout << "distance: " << ft::distance(v.end(), v.begin()) << std::endl;
     // std::cout << *(v.end() + -1) << std::endl;
