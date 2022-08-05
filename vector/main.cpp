@@ -118,15 +118,16 @@ int main ()
     // v1.insert(v1.begin(),1,3);
     // v1.insert(v1.begin(),6);
 
-    ft::vector<int> v2;
-    ft::vector<int> v1;
+    std::vector<int> v2;
+    std::vector<int> v1;
     v1.push_back(1);
-    v1.push_back(1);
-    v1.push_back(1);
-    v1.insert(v1.end(),3,7);
+    v1.push_back(2);
+    v1.push_back(3);
+    // v1.insert(v1.end(),3,7);
+    // v2.insert(v2.begin(),11,3);
+    // v1.insert(v1.begin() + 2, v2.begin(),v2.end());
     pr(v1);
-    v2.insert(v2.begin(),11,3);
-    v1.insert(v1.begin() + 2, v2.begin(),v2.end());
+    v1.erase(v1.begin());
     pr(v1);
     // v1.erase(v1.begin() + 2);
     // std::vector<int>::iterator i = v.begin();

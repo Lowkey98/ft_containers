@@ -154,7 +154,6 @@ namespace ft
             {
                 int dis = distance(end(), position);
                 int n = distance(last, first);
-                // std::cout << dis << std::endl;
                 if (_size + n > _capacity * 2)
                     reserve(_size + n);              
                 for (iterator i = first; i != last; i++)
@@ -162,7 +161,7 @@ namespace ft
             }
             iterator    erase(iterator position)
             {
-                // _allocator.destroy(*position);
+                _allocator.destroy(&(*position));
                 for (iterator i = position; i != end(); i++)
                     *i = *(i + 1);
                 _size--;
