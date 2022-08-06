@@ -149,15 +149,15 @@ namespace ft
                 while (n--)
                     insert(end() - dis, val);
             }
-            // template <class InputIterator>
-            void insert (iterator position, iterator first, iterator last)
+            template <class InputIterator>
+            void insert (iterator position, InputIterator first, InputIterator last)
             {
                 int dis = distance(end(), position);
                 int n = distance(last, first);
                 if (_size + n > _capacity * 2)
-                    reserve(_size + n);              
-                for (iterator i = first; i != last; i++)
-                    insert(end() - dis, *first);
+                    reserve(_size + n);
+                for (InputIterator i = first; i != last; i++)
+                    insert(end() - dis, *i);
             }
             iterator    erase(iterator position)
             {
