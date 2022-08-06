@@ -162,7 +162,7 @@ namespace ft
             iterator    erase(iterator position)
             {
                 _allocator.destroy(&(*position));
-                for (iterator i = position; i != end(); i++)
+                for (iterator i = position; i != end() - 1; i++)
                     *i = *(i + 1);
                 _size--;
                 return (position);                    
