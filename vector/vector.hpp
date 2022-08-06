@@ -86,16 +86,26 @@ namespace ft
             }
             void assign(size_type n, const value_type& val)
             {
+                clear();
                 if (n > _capacity)
                     this->reserve(n);
                 for (size_type i = 0; i < n; i++)
-                {
-                    _allocator.destroy(&_buff[i]);
                     _allocator.construct(&_buff[i], val);
-                }
-                for (size_type i = n; i < _size; i++)
-                    _allocator.destroy(&_buff[i]);
                 _size = n;
+            }
+            template <class InputIterator>
+            void    assign(InputIterator first, InputIterator last)
+            {
+                clear();
+                size_type dis = ft::distance(last, first);
+                if (dis > _capacity)
+                    this->reserve(dis);
+                for (size_type i = 0; i != dis; i++)
+                {
+                    _allocator.construct(&_buff[i], *first);
+                    first++;
+                }
+                _size = dis;
             }
             bool empty() const {return _size == 0;}
             reference operator[](size_type n){ return (_buff[n]);}
@@ -152,8 +162,8 @@ namespace ft
             template <class InputIterator>
             void insert (iterator position, InputIterator first, InputIterator last)
             {
-                int dis = distance(end(), position);
-                int n = distance(last, first);
+                int dis = ft::distance(end(), position);
+                int n = ft::distance(last, first);
                 if (_size + n > _capacity * 2)
                     reserve(_size + n);
                 for (InputIterator i = first; i != last; i++)
