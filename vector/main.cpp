@@ -123,16 +123,18 @@ int main ()
     v1.push_back(1);
     v1.push_back(2);
     v1.push_back(3);
+    v1.push_back(4);
+    v1.push_back(5);
+    v1.push_back(6);
     // v1.insert(v1.end(),3,7);
     // v2.insert(v2.begin(),11,3);
     // v1.insert(v1.begin() + 2, v2.begin(),v2.end());
     pr(v1);
-    v1.erase(v1.begin());
-    v1.erase(v1.begin());
-    v1.erase(v1.begin());
-    v1.erase(v1.begin());
+    std::cout << *(v1.erase(v1.begin())) << std::endl;
+    // v1.erase(v1.begin(), v1.end());
+    // v1.erase(v1.begin());
+    // v1.erase(v1.begin());
     pr(v1);
-    // v1.erase(v1.begin() + 2);
     // ft::vector<int>::iterator i = v.begin();
     // for (std::vector<int>::iterator i = v.end(); i != v.begin(); i--)
     // {

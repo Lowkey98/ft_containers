@@ -167,6 +167,17 @@ namespace ft
                 _size--;
                 return (position);                    
             }
+            iterator    erase(iterator first, iterator last)
+            {
+                int dis = ft::distance(last, first);
+                // int dis1 = ft::distance(first, begin());
+                for (iterator i = first; i != last; i++)
+                    _allocator.destroy(&(*i));
+                for (iterator i = last; i != end(); i++)
+                    *(i - dis) = *i;
+                _size -= dis;
+                return (first);
+            }
         private:
 			Allocator	_allocator;
 			size_type _size;
