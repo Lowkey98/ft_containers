@@ -118,11 +118,11 @@ int main ()
     // v1.insert(v1.begin(),1,3);
     // v1.insert(v1.begin(),6);
 
-    std::vector<int> v1;
-    std::vector<int> v2;
-    v1.push_back(1);
-    v1.push_back(2);
-    v1.push_back(3);
+    ft::vector<int> v1(5,10);
+    // std::vector<int> v2;
+    // v1.push_back(1);
+    // v1.push_back(2);
+    // v1.push_back(3);
     // // v1.insert(v1.end(),3,7);
 
     // v2.insert(v2.begin(),0,0); // <----- uncomment this
@@ -132,9 +132,9 @@ int main ()
 
     pr(v1);
     // v1.assign(20,20);
-    pr(v1);
-    v1.assign(v2.begin(), v2.end());
-    pr(v1);
+    // pr(v1);
+    // v1.assign(v2.begin(), v2.end());
+    // pr(v1);
     // std::cout << *(v1.erase(v1.begin())) << std::endl;
     // v1.erase(v1.begin(), v1.end());
     // v1.erase(v1.begin());
