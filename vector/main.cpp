@@ -118,7 +118,11 @@ int main ()
     // v1.insert(v1.begin(),1,3);
     // v1.insert(v1.begin(),6);
 
-    ft::vector<int> v1(5,10);
+    ft::vector<int> v2(5);
+    // v2.assign(3,3); // <--- uncomment this for idnerection requires pointer 
+    v2.push_back(1);
+    ft::vector<int> v1(v2.begin(), v2.end() - 1);
+    pr(v1);
     // std::vector<int> v2;
     // v1.push_back(1);
     // v1.push_back(2);
@@ -130,7 +134,6 @@ int main ()
     // v2.assign(10,10);
     // v1.assign(5,5);
 
-    pr(v1);
     // v1.assign(20,20);
     // pr(v1);
     // v1.assign(v2.begin(), v2.end());

@@ -31,6 +31,18 @@ namespace ft
                 for (size_type i = 0; i < n; i++)
                     _allocator.construct(&_buff[i],val);
             }
+            template <class InputIterator>
+            vector (InputIterator first, InputIterator last,
+                 const allocator_type& alloc = allocator_type())
+            {
+                size_type n = ft::distance(last, first);
+                _size = n;
+                _capacity = n;
+                _allocator = alloc;
+                _buff = _allocator.allocate(n);
+                for (size_type i = 0; i < n; i++)
+                    _allocator.construct(&_buff[i], *(first + i));
+            }
 			size_type size(){ return _size;}
 			size_type capacity(){ return _capacity;}
 
