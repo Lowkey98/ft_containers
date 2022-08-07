@@ -12,6 +12,7 @@ namespace ft
             typedef T& reference;
             typedef std::size_t size_type;
             typedef ft::iterator<T> iterator;
+            typedef ft::const_iterator<T> const_iterator;
             typedef Allocator allocator_type;
 		public:
             explicit vector (const allocator_type& alloc = allocator_type())
@@ -160,6 +161,14 @@ namespace ft
             iterator begin() 
             {
                 return (iterator(&_buff[0]));
+            }
+            const_iterator begin() const
+            {
+                return (const_iterator(&_buff[0]));
+            }
+            const_iterator end() const
+            {
+                return (const_iterator(&_buff[_size]));
             }
             iterator end() {return (iterator(&_buff[_size]));};
             iterator insert(iterator position, const value_type &val)
