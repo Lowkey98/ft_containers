@@ -12,6 +12,7 @@ namespace ft
             typedef T& reference;
             typedef std::size_t size_type;
             typedef ft::iterator<T> iterator;
+            typedef ft::reverse_iterator<T> reverse_iterator;
             typedef ft::const_iterator<T> const_iterator;
             typedef Allocator allocator_type;
 		public:
@@ -166,9 +167,17 @@ namespace ft
             {
                 return (const_iterator(&_buff[0]));
             }
+            reverse_iterator rbegin()
+            {
+                return (reverse_iterator(end()));
+            }
             const_iterator end() const
             {
                 return (const_iterator(&_buff[_size]));
+            }
+            reverse_iterator rend()
+            {
+                return (reverse_iterator(begin()));
             }
             iterator end() {return (iterator(&_buff[_size]));};
             iterator insert(iterator position, const value_type &val)

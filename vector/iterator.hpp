@@ -16,12 +16,10 @@ namespace ft
             }
             iterator(const iterator &it)
             {
-                std::cout << "Copy constructor called" << std::endl;
                 *this = it;
             }
             iterator &operator=(const iterator &it)
             {
-                std::cout << "=operator" << std::endl;
                 ptr = it.get_ptr();
                 return *this;
             }
@@ -96,5 +94,27 @@ namespace ft
             const value_type *get_ptr() const{return ptr;}
         private:
             const value_type *ptr;
+    };
+    template <class T>
+    class reverse_iterator
+    {
+        public:
+            typedef T value_type;
+            typedef ft::iterator<T> iterator;
+        public:
+            reverse_iterator(){};
+            // reverse_iterator(value_type *ptr){this->ptr = ptr;};
+            explicit reverse_iterator(iterator it)
+            {
+                _base = it;
+            }
+            value_type & operator*()
+            {
+
+                return(*(_base - 1));
+            }
+            iterator base(){return (_base);}
+        private:
+            iterator _base;
     };
 }
