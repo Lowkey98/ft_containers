@@ -124,12 +124,18 @@ int main ()
     v1.push_back(3);
     v1.resize(2);
     pr(v1);
+    ft::vector<int>::iterator i = v1.begin() + 3;
+    *i = 10;
+    std::cout << *i << std::endl;
+    std::cout << *(i + 1) << std::endl;
+    std::cout << *(i - 1) << std::endl;
+    std::cout << *(i+=1) << std::endl;
+    std::cout << (i == v1.begin()) << std::endl;
     // std::cout << *(v1.rend());
     // for (std::vector<int>::reverse_iterator i = v1.rend(); i != v1.rbegin(); i--)
-    //     std::cout << *i << std::endl;
-    // std::vector<int>reverse_iterator i = v1.rbegin();
-    std::cout << *(v1.rend().base())<< std::endl;
-    std::cout << *(v1.rend())<< std::endl;
+    // *(i.base()) = 5;
+    std::cout << *(v1.end().base())<< std::endl;
+    std::cout << *(v1.end())<< std::endl;
     // v2.assign(3,3); // <--- uncomment this for idnerection requires pointer 
     // const int a = 10;
     // v1.push_back(a);

@@ -7,7 +7,6 @@ namespace ft
     {
         public:
             typedef T value_type;
-    
         public:
             iterator(){};
             iterator(value_type *v)
@@ -20,31 +19,62 @@ namespace ft
             }
             iterator &operator=(const iterator &it)
             {
-                ptr = it.get_ptr();
+                ptr = it.base();
                 return *this;
             }
-            value_type& operator *() {return *ptr;}
-            value_type operator ++(int n)
+            ~iterator(){};
+            bool operator==(const iterator &it) {return (this->ptr == it.base());}
+            bool operator!=(const iterator &it) {return (this->ptr != it.base());}
+            bool operator<(const iterator &it) {return (this->ptr < it.base());}
+            bool operator<=(const iterator &it) {return (this->ptr <= it.base());}
+            bool operator>=(const iterator &it) {return (this->ptr >= it.base());}
+            bool operator>(const iterator &it) {return (this->ptr > it.base());}
+            value_type& operator*() {return *ptr;}
+            value_type* operator->() {return ptr;}
+            iterator operator ++()
             {
-                (void)n;
                 ptr++;
-                return (*ptr);
+                return (*this);
             }
-            value_type operator --(int n)
+            iterator operator ++(int)
             {
-                (void)n;
-                ptr--;
-                return (*ptr);
+                iterator tmp = *this;
+                ptr++;
+                return (tmp);
             }
-            value_type *get_ptr() const{return ptr;}
+            iterator operator --()
+            {
+                ptr--;
+                return (*this);
+            }
+            iterator operator --(int)
+            {
+                iterator tmp = *this;
+                ptr--;
+                return (tmp);
+            }
             iterator operator-(int n)
             {
-                return(iterator(this->get_ptr() - n));
+                return(iterator(this->base() - n));
             }
             iterator operator+(int n)
             {
-                return(iterator(this->get_ptr() + n));
+                return(iterator(this->base() + n));
             }
+            int     operator-(iterator &it) { return (*this->ptr - it.base());}
+            iterator &operator+=(int n)
+            {
+                ptr += n;
+                return (*this);
+            }
+            iterator &operator-=(int n)
+            {
+                ptr -= n;
+                return (*this);
+            }
+            value_type & operator[](int n) {return ptr[n];}
+            value_type *base() const{return ptr;}
+            
 
         private:
             value_type *ptr;
