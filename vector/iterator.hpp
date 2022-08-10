@@ -100,28 +100,71 @@ namespace ft
             typedef ft::iterator<T> iterator;
         public:
             const_iterator(){};
-            const_iterator(const_iterator &const_it)
+            const_iterator(const value_type *v) :ptr(v)
             {
-                *this = const_it;
+                // ptr = v;
             }
-            const_iterator(iterator &it)
+            const_iterator(const iterator &it) : ptr(it.base())
             {
-                *this = it;
+                // *this = it;
             }
-            const_iterator& operator = (const const_iterator &const_it)
+            const_iterator &operator=(const const_iterator &it)
             {
-                this->ptr = const_it.get_ptr();
+                ptr = it.base();
+                return *this;
+            }
+            ~const_iterator(){};
+            bool operator==(const const_iterator &it) {return (this->ptr == it.base());}
+            bool operator!=(const const_iterator &it) {return (this->ptr != it.base());}
+            bool operator<(const const_iterator &it) {return (this->ptr < it.base());}
+            bool operator<=(const const_iterator &it) {return (this->ptr <= it.base());}
+            bool operator>=(const const_iterator &it) {return (this->ptr >= it.base());}
+            bool operator>(const const_iterator &it) {return (this->ptr > it.base());}
+            value_type operator*() {return *ptr;}
+            value_type* operator->() {return ptr;}
+            const_iterator operator ++()
+            {
+                ptr++;
                 return (*this);
             }
-            // template<class iterator>
-            const_iterator &operator = (const iterator &it)
+            const_iterator operator ++(int)
             {
-                this->ptr = it.get_ptr();
+                const_iterator tmp = *this;
+                ptr++;
+                return (tmp);
+            }
+            const_iterator operator --()
+            {
+                ptr--;
                 return (*this);
             }
-            const_iterator(const value_type *v){ptr = v;};
-            const value_type& operator *() {return *ptr;}
-            const value_type *get_ptr() const{return ptr;}
+            const_iterator operator --(int)
+            {
+                const_iterator tmp = *this;
+                ptr--;
+                return (tmp);
+            }
+            const_iterator operator-(int n)
+            {
+                return(const_iterator((this->base() - n)));
+            }
+            const_iterator operator+(int n)
+            {
+                return(const_iterator(this->base() + n));
+            }
+            int     operator-(const_iterator &it) { return (*this->ptr - it.base());}
+            const_iterator &operator+=(int n)
+            {
+                ptr += n;
+                return (*this);
+            }
+            const_iterator &operator-=(int n)
+            {
+                ptr -= n;
+                return (*this);
+            }
+            value_type & operator[](int n) {return ptr[n];}
+            const value_type *base() const{return ptr;}
         private:
             const value_type *ptr;
     };

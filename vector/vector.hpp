@@ -159,13 +159,13 @@ namespace ft
                 while(_size)
                     this->pop_back();
             }
-            iterator begin() 
-            {
-                return (iterator(&_buff[0]));
-            }
             const_iterator begin() const
             {
                 return (const_iterator(&_buff[0]));
+            }
+            iterator begin() 
+            {
+                return (iterator(&_buff[0]));
             }
             reverse_iterator rbegin()
             {
