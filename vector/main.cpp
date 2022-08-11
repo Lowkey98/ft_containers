@@ -124,17 +124,19 @@ int main ()
     v1.push_back(3);
     v1.resize(2);
     pr(v1);
-    ft::vector<int>::const_iterator i = v1.begin();
-    // ft::cout << *(v1.begin()) << std::endl;
-    *i = 10;
-    std::cout << *i << std::endl;
-    std::cout << *(i + 1) << std::endl;
-    std::cout << *(i - 1) << std::endl;
-    std::cout << *(i+=1) << std::endl;
-    std::cout << (i == v1.begin()) << std::endl;
-    std::cout << *(v1.end().base())<< std::endl;
-    std::cout << *(v1.end())<< std::endl;
-    // std::cout << *(v1.rend());
+    ft::vector<int>::const_reverse_iterator i = v1.rbegin();
+    std::cout << *(v1.rbegin()) << std::endl;
+    *i = 1;
+    // std::cout << "*i= " << i << std::endl;
+    std::cout << "*i= " << *i << std::endl;
+    std::cout << "*(i + 1)= " << *(i + 1) << std::endl;
+    std::cout << "*(i - 1) = " << *(i - 1) << std::endl;
+    std::cout << "*(i + 1).base= " << *((i + 1).base()) << std::endl;
+    std::cout << "*(i+=1)= " << *(i+=1) << std::endl;
+    std::cout << "*(i-=1)= " << *(i-=1) << std::endl;
+    std::cout << "*(v1.rend().base())=  " << *(v1.rend().base())<< std::endl;
+    std::cout << "*(v1.rend())= " << *(v1.rend())<< std::endl;
+    std::cout << "*i= " << *i << std::endl;
     // for (std::vector<int>::reverse_iterator i = v1.rend(); i != v1.rbegin(); i--)
     // *(i.base()) = 5;
     // v2.assign(3,3); // <--- uncomment this for idnerection requires pointer 

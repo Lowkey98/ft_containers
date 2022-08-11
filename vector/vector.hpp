@@ -14,6 +14,7 @@ namespace ft
             typedef ft::iterator<T> iterator;
             typedef ft::reverse_iterator<T> reverse_iterator;
             typedef ft::const_iterator<T> const_iterator;
+            typedef ft::const_reverse_iterator<T> const_reverse_iterator;
             typedef Allocator allocator_type;
 		public:
             explicit vector (const allocator_type& alloc = allocator_type())
@@ -171,6 +172,10 @@ namespace ft
             {
                 return (reverse_iterator(end()));
             }
+            const_reverse_iterator rbegin() const
+            {
+                return (const_reverse_iterator(end()));
+            }
             const_iterator end() const
             {
                 return (const_iterator(&_buff[_size]));
@@ -178,6 +183,10 @@ namespace ft
             reverse_iterator rend()
             {
                 return (reverse_iterator(begin()));
+            }
+            const_reverse_iterator rend() const
+            {
+                return (const_reverse_iterator(begin()));
             }
             iterator end() {return (iterator(&_buff[_size]));};
             iterator insert(iterator position, const value_type &val)

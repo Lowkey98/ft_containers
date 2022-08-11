@@ -120,8 +120,7 @@ namespace ft
             bool operator<=(const const_iterator &it) {return (this->ptr <= it.base());}
             bool operator>=(const const_iterator &it) {return (this->ptr >= it.base());}
             bool operator>(const const_iterator &it) {return (this->ptr > it.base());}
-            value_type operator*() {return *ptr;}
-            value_type* operator->() {return ptr;}
+            const value_type operator*() {return *ptr;}
             const_iterator operator ++()
             {
                 ptr++;
@@ -177,17 +176,85 @@ namespace ft
         public:
             reverse_iterator(){};
             // reverse_iterator(value_type *ptr){this->ptr = ptr;};
+            reverse_iterator(iterator &it) : _base(it.base()) {}
             explicit reverse_iterator(iterator it)
             {
                 _base = it;
             }
             value_type & operator*()
             {
-
                 return(*(_base - 1));
             }
-            iterator base(){return (_base);}
+            reverse_iterator operator+(int n){return (reverse_iterator(base() - n));}
+            reverse_iterator operator-(int n){return (reverse_iterator(base() + n));}
+            bool operator==(const reverse_iterator &it) {return (this->ptr == it.base());}
+            bool operator!=(const reverse_iterator &it) {return (this->ptr != it.base());}
+            bool operator<(const reverse_iterator &it) {return (this->ptr < it.base());}
+            bool operator<=(const reverse_iterator &it) {return (this->ptr <= it.base());}
+            bool operator>=(const reverse_iterator &it) {return (this->ptr >= it.base());}
+            bool operator>(const reverse_iterator &it) {return (this->ptr > it.base());}
+            reverse_iterator &operator+=(int n)
+            {
+                _base-=n;
+                return (*this);
+            }
+            reverse_iterator &operator-=(int n)
+            {
+                _base+=n;
+                return (*this);
+            }
+            iterator base()const{return (_base);}
+
         private:
             iterator _base;
+    };
+    template <class T>
+    class const_reverse_iterator
+    {
+        public:
+            typedef T value_type;
+            typedef ft::const_iterator<T> const_iterator;
+            typedef ft::reverse_iterator<T> reverse_iterator;
+
+        public:
+            const_reverse_iterator(){};
+            const_reverse_iterator(const reverse_iterator &it) : _base(it.base())
+            {
+                // *this = it;
+            }
+            const_reverse_iterator &operator=(const const_reverse_iterator &it)
+            {
+                _base = it.base();
+                return *this;
+            }
+            explicit const_reverse_iterator(const_iterator it)
+            {
+                _base = it;
+            }
+            const value_type operator*()
+            {
+                return(*(_base - 1));
+            }
+            const_reverse_iterator operator+(int n){return (const_reverse_iterator(base() - n));}
+            const_reverse_iterator operator-(int n){return (const_reverse_iterator(base() + n));}
+            bool operator==(const const_reverse_iterator &it) {return (this->ptr == it.base());}
+            bool operator!=(const const_reverse_iterator &it) {return (this->ptr != it.base());}
+            bool operator<(const const_reverse_iterator &it) {return (this->ptr < it.base());}
+            bool operator<=(const const_reverse_iterator &it) {return (this->ptr <= it.base());}
+            bool operator>=(const const_reverse_iterator &it) {return (this->ptr >= it.base());}
+            bool operator>(const const_reverse_iterator &it) {return (this->ptr > it.base());}
+            const_reverse_iterator &operator+=(int n)
+            {
+                _base-=n;
+                return (*this);
+            }
+            const_reverse_iterator &operator-=(int n)
+            {
+                _base+=n;
+                return (*this);
+            }
+            const_iterator base()const {return (_base);}
+        private:
+            const_iterator _base;
     };
 }
