@@ -1,4 +1,5 @@
 #include "vector.hpp"
+#include "helper.hpp"
 #include <vector>
 #include <cstdio>
 #include <iterator>
@@ -83,10 +84,53 @@ void pr(std::vector<T> &a)
     }
     std::cout << std::endl;
 }
+
+template<bool B, class T = void>
+struct enable_if {};
+ 
+template<class T>
+struct enable_if<true, T> { typedef T type; };
+
+class class_a{
+    public:
+        template<class T>
+        int foo(class_a a, T b, T c)
+        {
+            (void)a;
+            // std::cout << a;
+            std::cout << *b;
+            std::cout << *c;
+            return (0);
+        }
+        int foo(class_a a,int b, int c)
+        {
+            (void)a;
+            std::cout << b <<std::endl;
+            std::cout << c <<std::endl;
+            return (10);
+        }
+        // char operator*(){return  ('c');};
+        // typename enable_if<std::is_integral<T>::value,T>::type
+};
+
+
 int main ()
 {
-//   std::vector<int> myvector;
-
+    // std::enable_if<true,int>::type
+    // std::cout << !ft::is_integral<int>::value;
+    // class_a object_a;
+    // int b = 1;
+    // int *c = &b;
+    // *c=10;
+    // object_a.foo(object_a,c,c);
+    // object_a.foo(object_a,3 ,3);
+    ft::vector<int> v1;
+    v1.insert(v1.begin() , 10, 5);
+    ft::vector<int> v2;
+    v2.insert(v2.begin(),v1.begin(), v1.end());
+    pr(v1);
+    pr(v2);
+    // // v2.insert(myvector.begin() + 1,3,2);
 //   // set some initial content:
 //   for (int i=1;i<10;i++) myvector.push_back(i);
 //   printf("Size = %ld\n", myvector.size());
@@ -115,28 +159,18 @@ int main ()
     // v1.push_back(1);
     // v1.reserve(10);
 
+
+    // std::vector<int> v1;
     // v1.insert(v1.begin(),1,3);
     // v1.insert(v1.begin(),6);
-
-    ft::vector<int> v1;
-    v1.push_back(1);
-    v1.push_back(2);
-    v1.push_back(3);
-    v1.resize(2);
-    pr(v1);
-    ft::vector<int>::const_reverse_iterator i = v1.rbegin();
-    std::cout << *(v1.rbegin()) << std::endl;
-    *i = 1;
+    // v1.push_back(1);
+    // v1.push_back(2);
+    // v1.push_back(3);
+    // v1.resize(2);
+    // pr(v1);
+    // ft::vector<int>::const_reverse_iterator i = v1.rbegin();
+    // std::cout << *(v1.rbegin()) << std::endl;
     // std::cout << "*i= " << i << std::endl;
-    std::cout << "*i= " << *i << std::endl;
-    std::cout << "*(i + 1)= " << *(i + 1) << std::endl;
-    std::cout << "*(i - 1) = " << *(i - 1) << std::endl;
-    std::cout << "*(i + 1).base= " << *((i + 1).base()) << std::endl;
-    std::cout << "*(i+=1)= " << *(i+=1) << std::endl;
-    std::cout << "*(i-=1)= " << *(i-=1) << std::endl;
-    std::cout << "*(v1.rend().base())=  " << *(v1.rend().base())<< std::endl;
-    std::cout << "*(v1.rend())= " << *(v1.rend())<< std::endl;
-    std::cout << "*i= " << *i << std::endl;
     // for (std::vector<int>::reverse_iterator i = v1.rend(); i != v1.rbegin(); i--)
     // *(i.base()) = 5;
     // v2.assign(3,3); // <--- uncomment this for idnerection requires pointer 
@@ -156,7 +190,7 @@ int main ()
     // // v1.insert(v1.end(),3,7);
 
     // v2.insert(v2.begin(),0,0); // <----- uncomment this
-    // v1.insert(v1.begin() + 2, v2.begin(),v2.end());
+    // v1.insert(v1.begin() + 2, v1.begin(),v1.end());
     // v2.assign(10,10);
     // v1.assign(5,5);
 

@@ -216,7 +216,7 @@ namespace ft
                     insert(end() - dis, val);
             }
             template <class InputIterator>
-            void insert (iterator position, InputIterator first, InputIterator last)
+            void insert (iterator position, typename ft::enable_if<ft::is_integral<InputIterator>::value,InputIterator>::type first, InputIterator last)
             {
                 int dis = ft::distance(end(), position);
                 int n = ft::distance(last, first);
