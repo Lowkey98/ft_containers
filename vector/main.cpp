@@ -117,6 +117,14 @@ class class_a{
 
 int main ()
 {
+    std::pair<int, int> pr1(4,4);
+    std::pair<int, int> pr2(3,3);
+    std::cout << (pr1 == pr2) << std::endl;
+    std::cout << (pr1 != pr2) << std::endl;
+    std::cout << (pr1 <= pr2) << std::endl;
+    std::cout << (pr1 < pr2) << std::endl;
+    std::cout << (pr1 > pr2) << std::endl;
+    std::cout << (pr1 >= pr2) << std::endl;
     // std::enable_if<true,int>::type
     // std::cout << !ft::is_integral<int>::value;
     // class_a object_a;
@@ -126,8 +134,8 @@ int main ()
     // object_a.foo(object_a,c,c);
     // object_a.foo(object_a,3 ,3);
     // std::iterator_traits<int*> traits;
-    if (typeid(ft::iterator_traits<int*>::difference_type)==typeid(std::ptrdiff_t))
-        std::cout << "working";
+    // if (typeid(ft::iterator_traits<int*>::difference_type)==typeid(std::ptrdiff_t))
+    //     std::cout << "working";
     // ft::vector<int> v1;
     // v1.assign(3, 3);
     // // v1.insert(v1.begin() , 10, 5);
