@@ -117,14 +117,10 @@ class class_a{
 
 int main ()
 {
-    std::pair<int, int> pr1(4,4);
-    std::pair<int, int> pr2(3,3);
-    std::cout << (pr1 == pr2) << std::endl;
-    std::cout << (pr1 != pr2) << std::endl;
-    std::cout << (pr1 <= pr2) << std::endl;
-    std::cout << (pr1 < pr2) << std::endl;
-    std::cout << (pr1 > pr2) << std::endl;
-    std::cout << (pr1 >= pr2) << std::endl;
+    ft::pair<int, int> pr1(4,4);
+    pr1 = ft::make_pair(3,4);
+    std::cout << pr1.first << std::endl;
+    std::cout << pr1.second << std::endl;
     // std::enable_if<true,int>::type
     // std::cout << !ft::is_integral<int>::value;
     // class_a object_a;
