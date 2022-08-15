@@ -130,10 +130,10 @@ int main ()
     ft::vector<int> v2;
     // v2.insert(v2.begin(),v1.begin(), v1.end());
     v2.assign(v1.begin(), v1.end());
-    // v1.push_back(4);
+    v1.push_back(4);
     pr(v1);
     pr(v2);
-    std::cout << ft::equal(v1.begin(), v1.end(), v2.begin());
+    std::cout << ft::equal(v1.begin(), v1.end(), v2.begin(),ft::pred);
     // // v2.insert(myvector.begin() + 1,3,2);
 //   // set some initial content:
 //   for (int i=1;i<10;i++) myvector.push_back(i);

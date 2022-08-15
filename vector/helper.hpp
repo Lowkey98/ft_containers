@@ -33,3 +33,17 @@ bool equal (InputIterator1 first1, InputIterator1 last1,
     }
     return (true);
 }
+bool pred(int i , int j){return i == j;}
+template <class InputIterator1, class InputIterator2, class BinaryPredicate>
+bool equal (InputIterator1 first1, InputIterator1 last1,
+              InputIterator2 first2, BinaryPredicate pred)
+{
+    while (first1 != last1)
+    {
+        if (!pred(*first1, *first2))
+            return (false);
+        first1++;
+        first2++;
+    }
+    return (true);
+}

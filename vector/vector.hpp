@@ -118,6 +118,7 @@ namespace ft
             }
             void assign(size_type n, const value_type& val)
             {
+                
                 clear();
                 if (n > _capacity)
                     this->reserve(n);
