@@ -1,7 +1,7 @@
 #pragma once
 #include <functional>
-#include "helper.hpp"
-
+#include "../helper.hpp"
+#include "iterator.hpp"
 namespace ft
 {
 	template < class Key,                                     // map::key_type
@@ -15,17 +15,49 @@ namespace ft
 			typedef T                       mapped_type;
 			typedef Compare                 key_compare;
 			typedef Alloc                   allocator_type;
-			typedef ft::pair<const Key,T>   value_type;
+			typedef pair<Key,T>   value_type;
+            typedef iterator<value_type>             iterator;
 			typedef Tree<value_type>		Tree;
-			typedef size_t					size_type 
+			typedef size_t					size_type;
+            typedef Node<value_type>        Node;
 		public:
 			explicit map (const key_compare& comp = key_compare(),
-              const allocator_type& alloc = allocator_type()) : _tree(), _size(0), _allocator() 
-			  {}
-			
+              const allocator_type& alloc = allocator_type()) : _allocator(), _tree() , _size(0)
+			  {
+                //temp
+                (void)comp;
+                (void)alloc;
+              }
+			size_type count (const key_type& k) const
+            {
+                if (_tree.search(_tree.root, k))
+                    return (1);
+                else
+                    return (0);
+            }
+            iterator find (const key_type& k)
+            {
+                return (iterator(_tree, _tree.search(_tree.root, k)));
+            }
+            pair<iterator,bool> insert (const value_type& val)
+            {
+                Node *node = _tree.search(_tree.root, val);
+                if (node)
+                    return make_pair(iterator(_tree, node), false);
+                return make_pair(iterator(_tree,_tree.insert(_tree.root, val)), true);
+            }
+            iterator begin()
+            {
+                iterator it = iterator(_tree, 0);
+                return (it++);
+            }
+            iterator end()
+            {
+                return (iterator(_tree, 0));
+            }
 		private:
 			allocator_type		_allocator;
 			Tree				_tree;
 			size_type			_size;
-	}
+	};
 }

@@ -1,17 +1,16 @@
 #include "bst.hpp"
 #include <map>
-
+#include "map.hpp"
+#include "../helper.hpp"
 int main()
 {
-    Tree<int> t;
-    t.root = t.insert(t.root,1);
-    // root = insert(root,2);
-    // root = insert(root,3);
-    // root = insert(root,4);
-    // root = delete_node(root,1);
-    // std::cout << get_balance_factor(root) << std::endl;
-    // postorder(root);
-    // std::map<int,int> a;
+    ft::map<int,int> mymap;
+    ft::map<int,int>::iterator it;
+    mymap.insert (pair<int,int>(1,1) );
+    mymap.insert (pair<int,int>(2,2) );
+    mymap.insert (pair<int,int>(3,3) );
+    for (it=mymap.begin(); it!=mymap.end(); it++)
+        std::cout << it->first << " => " << it->second << '\n';
 
     return 0;
 }

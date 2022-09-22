@@ -15,6 +15,7 @@ class Tree
         typedef Node<T> Node;
     public:
         Tree(): root(NULL){}
+    
         Node *root;
 
     Node *newNode(T data)
@@ -86,7 +87,7 @@ class Tree
     {
         return (height(node->left) - height(node->right));
     }
-    Node* insert(Node *node, int data)
+    Node* insert(Node *node, T data)
     {
         if (node == NULL)
             return (newNode(data));
@@ -115,6 +116,23 @@ class Tree
                 node = right_right_rotation(node);
         }
         return (node);
+    }
+    Node* search(Node *root, T data)
+    {
+        if (root == NULL)
+            return NULL;
+        else if (root->data == data)
+            return root;
+        else if (root->data > data)
+        {
+            Node* rt = search(root->left, data);
+            return rt;
+        }
+        else
+        {
+            Node* rt = search(root->right, data);
+            return rt;
+        }
     }
     void    inorder(Node* node)
     {
@@ -147,7 +165,7 @@ class Tree
             current = current->left;
         return current;
     }
-    Node * delete_node(Node *node, int data)
+    Node * delete_node(Node *node, T data)
     {
         if (node == NULL)
             return node;
