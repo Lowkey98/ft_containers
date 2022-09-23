@@ -44,11 +44,13 @@ namespace ft
                 Node *node = _tree.search(_tree.root, val);
                 if (node)
                     return make_pair(iterator(_tree, node), false);
-                return make_pair(iterator(_tree,_tree.insert(_tree.root, val)), true);
+                _tree.root = _tree.insert(_tree.root, val);
+                return make_pair(iterator(_tree, _tree.root), true);
             }
             iterator begin()
             {
                 iterator it = iterator(_tree, 0);
+                // return(it);
                 return (it++);
             }
             iterator end()

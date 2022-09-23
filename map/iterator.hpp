@@ -34,6 +34,7 @@ class iterator
                 _current = _tree.root;
                 while (_current->left != NULL)
                     _current = _current->left;
+                // exit(0);
             }
             else
             {
