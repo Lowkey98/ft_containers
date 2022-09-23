@@ -50,7 +50,6 @@ namespace ft
             iterator begin()
             {
                 iterator it = iterator(_tree, 0);
-                // return(it);
                 return (it++);
             }
             iterator end()

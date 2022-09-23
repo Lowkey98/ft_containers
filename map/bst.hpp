@@ -92,9 +92,17 @@ class Tree
         if (node == NULL)
             return (newNode(data));
         if (data > node->data)
-            node->right = insert(node->right, data);
+        {
+            Node *right_child = insert(node->right, data);
+            node->right = right_child;
+            right_child->parent = node;
+        }
         else
-            node->left = insert(node->left, data);
+        {
+            Node *left_child = insert(node->left, data);
+            node->left = left_child;
+            left_child->parent = node;
+        }
 
         int balance_factor = get_balance_factor(node);
         if (balance_factor == 2)
@@ -121,9 +129,9 @@ class Tree
     {
         if (root == NULL)
             return NULL;
-        else if (root->data == data)
+        else if (root->data.first == data.first)
             return root;
-        else if (root->data > data)
+        else if (root->data.first > data.first)
         {
             Node* rt = search(root->left, data);
             return rt;
@@ -139,7 +147,10 @@ class Tree
         if (node == NULL)
             return ;
         inorder(node->left);
-        std::cout << node->data << std::endl;
+        if (node->parent)
+            std::cout << node->data << "parent" << node->parent->data << std::endl;
+        else
+            std::cout << node->data << std::endl; 
         inorder(node->right);
     }
     void    preorder(Node* node)
