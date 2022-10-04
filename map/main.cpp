@@ -4,19 +4,19 @@
 #include "../helper.hpp"
 int main()
 {
-    Tree <int> a;
+    Tree <int,int> a;
     // a.root = a.insert(a.root,1);
     // a.root = a.insert(a.root,2);
     // a.root = a.insert(a.root,3);
     // a.inorder(a.root);
     ft::map<int,int> mymap;
     ft::map<int,int>::iterator it;
-    mymap.insert (pair<int,int>(13,13) );
-    mymap.insert (pair<int,int>(3,10) );
-    mymap.insert (pair<int,int>(1,7) );
-    mymap.insert (pair<int,int>(4,4) );
-    mymap.insert (pair<int,int>(3,3) );
-    mymap.insert (pair<int,int>(2,6) );
+    mymap.insert (ft::pair<int,int>(13,13) );
+    mymap.insert (ft::pair<int,int>(3,10) );
+    mymap.insert (ft::pair<int,int>(1,7) );
+    mymap.insert (ft::pair<int,int>(4,4) );
+    mymap.insert (ft::pair<int,int>(3,3) );
+    mymap.insert (ft::pair<int,int>(2,6) );
     for (it=mymap.begin(); it!=mymap.end(); it++)
     {
         std::cout << it->first << " => " << it->second << '\n';

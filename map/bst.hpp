@@ -1,4 +1,5 @@
 #include<iostream>
+#include "../helper.hpp"
 template <class T>
 struct Node
 {
@@ -8,17 +9,22 @@ struct Node
     Node<T> *parent;
 };
 
-template <class T>
+template <class Key,
+          class T,
+          class Compare = std::less<Key>,
+          class Alloc = std::allocator<ft::pair<const Key,T> >
+        >
 class Tree
 {
     public:
-        typedef Node<T> Node;
+        typedef ft::pair<Key,T> value_type;
+        typedef Node<value_type> Node;
     public:
         Tree(): root(NULL){}
     
         Node *root;
 
-    Node *newNode(T data)
+    Node *newNode(value_type data)
     {
         Node* n = (Node *)malloc(sizeof(Node));
         n->data = data;
@@ -87,7 +93,7 @@ class Tree
     {
         return (height(node->left) - height(node->right));
     }
-    Node* insert(Node *node, T data)
+    Node* insert(Node *node, value_type data)
     {
         if (node == NULL)
             return (newNode(data));
@@ -125,7 +131,7 @@ class Tree
         }
         return (node);
     }
-    Node* search(Node *root, T data)
+    Node* search(Node *root, value_type data)
     {
         if (root == NULL)
             return NULL;
@@ -176,7 +182,7 @@ class Tree
             current = current->left;
         return current;
     }
-    Node * delete_node(Node *node, T data)
+    Node * delete_node(Node *node, value_type data)
     {
         if (node == NULL)
             return node;

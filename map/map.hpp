@@ -16,8 +16,8 @@ namespace ft
 			typedef Compare                 key_compare;
 			typedef Alloc                   allocator_type;
 			typedef pair<Key,T>   value_type;
-            typedef iterator<value_type>             iterator;
-			typedef Tree<value_type>		Tree;
+            typedef iterator<Key,T>             iterator;
+			typedef Tree<Key,T>		Tree;
 			typedef size_t					size_type;
             typedef Node<value_type>        Node;
 		public:
@@ -39,13 +39,13 @@ namespace ft
             {
                 return (iterator(_tree, _tree.search(_tree.root, k)));
             }
-            pair<iterator,bool> insert (const value_type& val)
+            std::pair<iterator,bool> insert (const value_type& val)
             {
                 Node *node = _tree.search(_tree.root, val);
                 if (node)
-                    return make_pair(iterator(_tree, node), false);
+                    return std::make_pair(iterator(_tree, node), false);
                 _tree.root = _tree.insert(_tree.root, val);
-                return make_pair(iterator(_tree, _tree.root), true);
+                return std::make_pair(iterator(_tree, _tree.root), true);
             }
             iterator begin()
             {

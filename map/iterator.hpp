@@ -1,20 +1,39 @@
 #pragma once
 #include "map.hpp"
+#include "../helper.hpp"
+#include <functional>
 
-template <class T>
+template <class Key,
+        class T,
+        class Compare = std::less<Key>,
+		class Alloc = std::allocator<ft::pair<const Key,T> >
+        >
 class iterator
 {
     public:
-		typedef Tree<T>          Tree;
-        typedef Node<T>             Node;
-        typedef T                   value_type;
+        typedef Key                     key_type;
+        typedef T                       mapped_type;
+        // typedef Compare                 key_compare;
+        // typedef Alloc                   allocator_type;
+        typedef ft::pair<Key,T>   value_type;
+        // typedef iterator<value_type>             iterator;
+        typedef Tree<Key, T>		Tree;
+        typedef size_t					size_type;
+        typedef Node<value_type>        Node;
+        
     public:
-        iterator() : _tree(), _current(){}
+        iterator() : _tree(), _current()
+        {
+            // (void)comp;
+        }
         iterator(const iterator &it)
         {
             *this = it;
         }
-        iterator(const Tree tr, Node *cr): _tree(tr), _current(cr){}
+        iterator(const Tree tr, Node *cr): _tree(tr), _current(cr)
+        {
+            // (void)comp;
+        }
         iterator &operator=(const iterator &it)
         {
             _tree = it._tree;
@@ -64,8 +83,9 @@ class iterator
 
 
 };
-template<class T>
-bool operator!=(iterator<T> & lhs, const iterator<T> & rhs)
+template<class Key,
+         class T>
+bool operator!=(iterator<Key,T> & lhs, const iterator<Key,T> & rhs)
 {
     return lhs.current() != rhs.current();
 }
