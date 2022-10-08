@@ -13,17 +13,19 @@ class iterator
     public:
         typedef Key                     key_type;
         typedef T                       mapped_type;
-        // typedef Compare                 key_compare;
-        // typedef Alloc                   allocator_type;
+        typedef Compare                 key_compare;
+        typedef Alloc                   allocator_type;
         typedef ft::pair<Key,T>   value_type;
-        // typedef iterator<value_type>             iterator;
-        typedef Tree<Key, T>		Tree;
+        typedef Tree<Key, T, Compare, Alloc>		Tree;
         typedef size_t					size_type;
         typedef Node<value_type>        Node;
-        
+    private:
+        Tree    _tree;
+        Node    *_current;
     public:
-        iterator() : _tree(), _current()
+        iterator() : _tree(), _current(_tree.root)
         {
+
             // (void)comp;
         }
         iterator(const iterator &it)
@@ -50,7 +52,7 @@ class iterator
             if (_current == NULL)
             {
                 // if (_tree.root == NULL) // no tree
-                _current = _tree.root;
+                // _current = _tree.root;
                 while (_current->left != NULL)
                     _current = _current->left;
                 // exit(0);
@@ -77,9 +79,6 @@ class iterator
             return *this;
         }
         Node    *current()const {return _current;}
-    private:
-        Tree    _tree;
-        Node    *_current;
 
 
 };

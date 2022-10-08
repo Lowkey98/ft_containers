@@ -1,12 +1,15 @@
 #include<iostream>
 #include "../helper.hpp"
 template <class T>
-struct Node
+class Node
 {
-    T  data;
-    Node<T> *left;
-    Node<T> *right;
-    Node<T> *parent;
+    public:
+        T  data;
+        Node<T> *left;
+        Node<T> *right;
+        Node<T> *parent;
+    public:
+        Node(T &d) :data(d){}
 };
 
 template <class Key,
@@ -17,218 +20,251 @@ template <class Key,
 class Tree
 {
     public:
-        typedef ft::pair<Key,T> value_type;
-        typedef Node<value_type> Node;
+        typedef Key								key_type;
+        typedef T								mapped_type;
+        typedef Compare							key_compare;
+        typedef Alloc							allocator_type;
+        typedef ft::pair<Key,T>                 value_type;
+        typedef Node<value_type>                Node;
     public:
         Tree(): root(NULL){}
-    
         Node *root;
-
-    Node *newNode(value_type data)
-    {
-        Node* n = (Node *)malloc(sizeof(Node));
-        n->data = data;
-        n->left = NULL;
-        n->right = NULL;
-        n->parent = NULL;
-        return (n);
-    }
-    Node *left_left_rotation(Node *root)
-    {
-        Node *tmp = root->left;
-        root->left = tmp->right;
-        if (tmp->right != NULL)
-            tmp->right->parent = root;
-        tmp->right = root;
-        tmp->parent = root->parent;
-        root->parent = tmp;
-        if (tmp->parent != NULL && root->data < tmp->parent->data)
-            tmp->parent->left = tmp;
-        else 
+    private:
+        key_compare _compare;
+        allocator_type _allocator;
+        typename allocator_type::template rebind<Node>::other _node_allocator;
+    public:
+        Node *left_left_rotation(Node *root)
         {
-            if (tmp->parent != NULL)
-                tmp->parent->right = tmp;
-        }
-        root = tmp;
-        return root;
-    }
-    Node* right_right_rotation(Node* root)
-    {
-        Node* tmp = root->right;
-        root->right = tmp->left;
-        if (tmp->left != NULL)
-            tmp->left->parent = root;
-        tmp->left = root;
-        tmp->parent = root->parent;
-        root->parent = tmp;
-        if (tmp->parent != NULL && root->data < tmp->parent->data)
-            tmp->parent->left = tmp;
-        else
-        {
-            if (tmp->parent != NULL)
-                tmp->parent->right = tmp;
-        }
-        root = tmp;
-        return root;
-    }
-    Node *left_right_rotation(Node *root)
-    {
-        root->left = right_right_rotation(root->left);
-        return (left_left_rotation(root));
-    }
-    Node *right_left_rotation(Node *root)
-    {
-        root->right = left_left_rotation(root->right);
-        return (right_right_rotation(root));
-    }
-    int     height(Node* node)
-    {
-        if (node == NULL)
-            return -1;
-        int height_l = height(node->left);
-        int height_r = height(node->right);
-        return (std::max(height_l, height_r) + 1);
-    }
-    int     get_balance_factor(Node* node)
-    {
-        return (height(node->left) - height(node->right));
-    }
-    Node* insert(Node *node, value_type data)
-    {
-        if (node == NULL)
-            return (newNode(data));
-        if (data > node->data)
-        {
-            Node *right_child = insert(node->right, data);
-            node->right = right_child;
-            right_child->parent = node;
-        }
-        else
-        {
-            Node *left_child = insert(node->left, data);
-            node->left = left_child;
-            left_child->parent = node;
-        }
-
-        int balance_factor = get_balance_factor(node);
-        if (balance_factor == 2)
-        {
-            if (data > node->left->data)
-            {
-                node = left_right_rotation(root);
-            }
+            Node *tmp = root->left;
+            root->left = tmp->right;
+            if (tmp->right != NULL)
+                tmp->right->parent = root;
+            tmp->right = root;
+            tmp->parent = root->parent;
+            root->parent = tmp;
+            if (tmp->parent != NULL && root->data < tmp->parent->data)
+                tmp->parent->left = tmp;
             else 
-                node = left_left_rotation(root);
-        }
-        else if (balance_factor == -2)
-        {
-            if (data < node->right->data)
             {
-                node = right_left_rotation(node);
+                if (tmp->parent != NULL)
+                    tmp->parent->right = tmp;
             }
-            else 
-                node = right_right_rotation(node);
-        }
-        return (node);
-    }
-    Node* search(Node *root, value_type data)
-    {
-        if (root == NULL)
-            return NULL;
-        else if (root->data.first == data.first)
+            root = tmp;
             return root;
-        else if (root->data.first > data.first)
-        {
-            Node* rt = search(root->left, data);
-            return rt;
         }
-        else
+        Node* right_right_rotation(Node* root)
         {
-            Node* rt = search(root->right, data);
-            return rt;
-        }
-    }
-    void    inorder(Node* node)
-    {
-        if (node == NULL)
-            return ;
-        inorder(node->left);
-        if (node->parent)
-            std::cout << node->data << "parent" << node->parent->data << std::endl;
-        else
-            std::cout << node->data << std::endl; 
-        inorder(node->right);
-    }
-    void    preorder(Node* node)
-    {
-        if (node == NULL)
-            return ;
-        std::cout << node->data << std::endl;
-        preorder(node->left);
-        preorder(node->right);
-    }
-    void    postorder(Node* node)
-    {
-        if (node == NULL)
-            return ;
-        postorder(node->left);
-        postorder(node->right);
-        std::cout << node->data << std::endl;
-    }
-    Node* minValueNode(Node *node)
-    {
-        Node* current = node;
-        while (current != NULL  && current->left != NULL)
-            current = current->left;
-        return current;
-    }
-    Node * delete_node(Node *node, value_type data)
-    {
-        if (node == NULL)
-            return node;
-        if (data < node->data)
-            node->left = delete_node(node->left, data);
-        else if (data > node->data)
-            node->right = delete_node(node->right, data);
-        else
-        {
-            if (node->left == NULL && node->right == NULL)
-                return NULL;
-            else if (node->left == NULL)
+            Node* tmp = root->right;
+            root->right = tmp->left;
+            if (tmp->left != NULL)
+                tmp->left->parent = root;
+            tmp->left = root;
+            tmp->parent = root->parent;
+            root->parent = tmp;
+            if (tmp->parent != NULL && root->data < tmp->parent->data)
+                tmp->parent->left = tmp;
+            else
             {
-                Node *temp = node->right;
-                free(node);
-                return temp;
+                if (tmp->parent != NULL)
+                    tmp->parent->right = tmp;
             }
-            else if (node->right == NULL)
-            {
-                Node *temp = node->left;
-                free(node);
-                return temp;
-            }
-            Node *temp = minValueNode(node->right);
-            node->data = temp->data;
-            node->right = delete_node(node->right, temp->data);
+            root = tmp;
+            return root;
         }
-        if (get_balance_factor(node) > 1 &&
-            get_balance_factor(node->left) >= 0)
-            return right_rotate(node);
-        if (get_balance_factor(node) > 1 &&
-            get_balance_factor(node->left ) < 0)
+        Node *left_right_rotation(Node *root)
         {
-            node->left = left_rotate(node->left);
-            return right_rotate(node);
+            root->left = right_right_rotation(root->left);
+            return (left_left_rotation(root));
         }
-        if (get_balance_factor(node) < -1 && 
-            get_balance_factor(node->right) <= 0)
-            return left_rotate(node);
-        if (get_balance_factor(node) < -1 &&
-            get_balance_factor(node->right) > 0)
+        Node *right_left_rotation(Node *root)
         {
-            node->right = right_rotate(node->right);
-            return left_rotate(node);
+            root->right = left_left_rotation(root->right);
+            return (right_right_rotation(root));
+        }
+        int     height(Node* node)
+        {
+            if (node == NULL)
+                return -1;
+            int height_l = height(node->left);
+            int height_r = height(node->right);
+            return (std::max(height_l, height_r) + 1);
+        }
+        int     get_balance_factor(Node* node)
+        {
+            return (height(node->left) - height(node->right));
         }
 
-        return node;
-    }
+        Node * delete_node(Node *node, key_type key)
+        {
+        	if (node != NULL)
+        	{
+                if (node->data.first == key)
+                { 
+					if (node->right == NULL
+						&& node->left != NULL) {
+						if (node->parent != NULL)
+						{
+							if (node->parent->data.first
+								< node->data.first)
+								node->parent->right = node->left;
+							else
+								node->parent->left = node->left;
+						}
+						node->left->parent = node->parent;
+						node->left = balance_tree(node->left, key);
+						return node->left;
+                }
+                	else if (node->left == NULL
+                        && node->right != NULL) {
+                    if (node->parent != NULL) {
+                        exit(0);
+                        if (node->parent->data.first
+                            < node->data.first)
+                            node->parent->right = node->right;
+                        else
+                            node->parent->left = node->right;
+                    }
+                    node->right->parent = node->parent;
+                    node->right = balance_tree(node->right, key);
+                    return node->right;
+                }
+                	else if (node->left == NULL
+                        && node->right == NULL)
+					{
+						if (node->parent->data.first < node->data.first)
+						{
+							node->parent->right = NULL;
+						}
+						else
+						{
+							node->parent->left = NULL;
+						}
+						node = NULL;
+						return NULL;
+            		}
+					else
+					{
+						// exit(0);
+						Node* tmpnode = node;
+						tmpnode = tmpnode->right;
+						while (tmpnode->left != NULL) {
+							tmpnode = tmpnode->left;
+						}
+						int val = tmpnode->data.first;
+						node->right = delete_node(node->right, tmpnode->data.first);
+						node->data.first = val;
+						node = balance_tree(node, key);
+					}
+        		}
+				else if (node->data.first < key)
+				{
+					node->right = delete_node(node->right, key);
+					node = balance_tree(node, key);
+				}
+				else if (node->data.first > key)
+				{
+					node->left = delete_node(node->left, key);
+					node = balance_tree(node, key);
+				}
+    		}
+        	return node;
+    	}
+        Node *balance_tree(Node* node, key_type key)
+        {
+            int balance_factor = get_balance_factor(node);
+            if (balance_factor == 2)
+            {
+                if (key > node->left->data.first)
+                {
+                    node = left_right_rotation(root);
+                }
+                else 
+                    node = left_left_rotation(root);
+            }
+            else if (balance_factor == -2)
+            {
+                if (key < node->right->data.first)
+                {
+                    node = right_left_rotation(node);
+                }
+                else 
+                    node = right_right_rotation(node);
+            }
+            return node;
+        }
+        Node* insert(Node *node, value_type data)
+        {
+            if (node == NULL)
+            {
+                node = _node_allocator.allocate(1);
+                _node_allocator.construct(node, data);
+                return (node);
+            }
+            if (data.first > node->data.first)
+            {
+                Node *right_child = insert(node->right, data);
+                node->right = right_child;
+                right_child->parent = node;
+            }
+            else
+            {
+                Node *left_child = insert(node->left, data);
+                node->left = left_child;
+                left_child->parent = node;
+            }
+            node = balance_tree(node, data.first);
+            return (node);
+        }
+        Node* search(Node *root, key_type key)
+        {
+            if (root == NULL)
+                return NULL;
+            else if (root->data.first == key)
+                return root;
+            else if (root->data.first > key)
+            {
+                Node* rt = search(root->left, key);
+                return rt;
+            }
+            else
+            {
+                Node* rt = search(root->right, key);
+                return rt;
+            }
+        }
+        void    inorder(Node* node)
+        {
+            if (node == NULL)
+                return ;
+            inorder(node->left);
+            if (node->parent)
+                std::cout << node->data.first << "parent" << node->parent->data.first << std::endl;
+            else
+                std::cout << node->data.first << std::endl; 
+            inorder(node->right);
+        }
+        void    preorder(Node* node)
+        {
+            if (node == NULL)
+                return ;
+            std::cout << node->data << std::endl;
+            preorder(node->left);
+            preorder(node->right);
+        }
+        void    postorder(Node* node)
+        {
+            if (node == NULL)
+                return ;
+            postorder(node->left);
+            postorder(node->right);
+            std::cout << node->data << std::endl;
+        }
+        Node* minValueNode(Node *node)
+        {
+            Node* current = node;
+            while (current != NULL  && current->left != NULL)
+                current = current->left;
+            return current;
+        }
 };
