@@ -48,7 +48,7 @@ namespace ft
                 Node *node = _tree.search(_tree.root, val.first);
                 if (node)
                     return std::make_pair(iterator(_tree, node), false);
-                _tree.root = _tree.insert(_tree.root, val);
+                _tree.root = _tree.insert(_tree.root,NULL, val);
                 return std::make_pair(iterator(_tree, _tree.root), true);
             }
             template <class InputIterator>
