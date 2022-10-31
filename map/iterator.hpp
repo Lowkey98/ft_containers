@@ -1,6 +1,7 @@
 #pragma once
 #include "map.hpp"
 #include "../helper.hpp"
+#include "avl.hpp"
 #include <functional>
 
 template <class Key,
@@ -11,19 +12,19 @@ template <class Key,
 class iterator
 {
     public:
-        typedef Key                     key_type;
-        typedef T                       mapped_type;
-        typedef Compare                 key_compare;
-        typedef Alloc                   allocator_type;
-        typedef ft::pair<Key,T>   value_type;
+        typedef Key                                 key_type;
+        typedef T                                   mapped_type;
+        typedef Compare                             key_compare;
+        typedef Alloc                               allocator_type;
+        typedef ft::pair<Key,T>                     value_type;
         typedef Tree<Key, T, Compare, Alloc>		Tree;
-        typedef size_t					size_type;
-        typedef Node<value_type>        Node;
+        typedef size_t					            size_type;
+        typedef Node<value_type>                    Node;
     private:
-        Tree    _tree;
+        Tree    *_tree;
         Node    *_current;
     public:
-        iterator() : _tree(), _current(_tree.root)
+        iterator() : _tree(), _current()
         {
 
             // (void)comp;
@@ -32,11 +33,11 @@ class iterator
         {
             *this = it;
         }
-        iterator(const Tree tr, Node *cr): _tree(tr), _current(cr)
+        iterator(Tree *tr, Node *cr): _tree(tr), _current(cr)
         {
             // (void)comp;
         }
-        iterator &operator=(const iterator &it)
+        iterator &operator=( const iterator &it)
         {
             _tree = it._tree;
             _current = it._current;
@@ -47,39 +48,21 @@ class iterator
         {
             return (&(_current->data));
         }
-        iterator operator++(int)
+        value_type operator*()
         {
-            if (_current == NULL)
-            {
-                // if (_tree.root == NULL) // no tree
-                // _current = _tree.root;
-                while (_current->left != NULL)
-                    _current = _current->left;
-                // exit(0);
-            }
-            else
-            {
-                if (_current->right != NULL)
-                {
-                    _current = _current->right;
-                    while (_current->left != NULL)
-                        _current = _current->left;
-                }
-                else
-                {
-                    Node *p = _current->parent;
-                    while (p != NULL && _current == p->right)
-                    {
-                        _current = p;
-                        p = p->parent;
-                    }
-                    _current = p;
-                }
-            }
-            return *this;
+            return (_current->data);
         }
         Node    *current()const {return _current;}
-
+        iterator operator++()
+        {
+            _current = _tree->findSuccessorIterative(_current->data.first);
+            return (iterator(_tree, _current));
+        }
+        iterator operator--()
+        {
+            _current = _tree->findPredecessorIterative(_current->data.first);
+            return (iterator(_tree, _current));
+        } 
 
 };
 template<class Key,

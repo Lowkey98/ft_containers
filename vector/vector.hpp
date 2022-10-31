@@ -1,9 +1,9 @@
 #pragma once
 #include <iostream>
 #include "iterator.hpp"
+#include "../helper.hpp"
 namespace ft
 {
-    #include "helper.hpp"
 	template <class T, class Allocator = std::allocator<T> >  
 	class vector
 	{

@@ -2,6 +2,7 @@
 #include <functional>
 #include "../helper.hpp"
 #include "iterator.hpp"
+#include <vector>
 namespace ft
 {
 	template < class Key,                                     // map::key_type
@@ -20,15 +21,17 @@ namespace ft
 			typedef Tree<Key,T, Compare, Alloc>		Tree;
 			typedef size_t							size_type;
             typedef Node<value_type>				Node;
-		public:
+		private:
 			allocator_type		_allocator;
-			Tree				_tree;
 			size_type			_size;
+			Tree				_tree;
+        // private:
+
 		public:
 			explicit map (const key_compare& comp = key_compare(),
-              const allocator_type& alloc = allocator_type()) : _allocator(), _tree() , _size(0)
+              const allocator_type& alloc = allocator_type()) : _allocator(),  _size(0), _tree()
 			  {
-                //temp
+                //temp 
                 (void)comp;
                 (void)alloc;
               }
@@ -45,38 +48,56 @@ namespace ft
             }
             std::pair<iterator,bool> insert (const value_type& val)
             {
-                Node *node = _tree.search(_tree.root, val.first);
-                if (node)
-                    return std::make_pair(iterator(_tree, node), false);
-                _tree.root = _tree.insert(_tree.root,NULL, val);
-                return std::make_pair(iterator(_tree, _tree.root), true);
+                if (_tree.search(val.first))
+                    return std::make_pair(iterator(&_tree, NULL), false);
+                _tree.insert(val);
+                return std::make_pair(iterator(&_tree, _tree.min_value_node()), true);
             }
             template <class InputIterator>
-            void insert (InputIterator first, InputIterator last)
-            {
-                while (first != last)
-                {
-                    insert(*first);
-                    first++;
-                }
-            }
+            // void insert (InputIterator first, InputIterator last)
+            // {
+            //     while (first != last)
+            //     {
+            //         insert(*first);
+            //         first++;
+            //     }
+            // }
             size_type erase (const key_type& k)
             {
                 if (_tree.search(_tree.root, k))
                 {
-                    _tree.delete_node(_tree.root, k);
+                    // _tree.delete_node(_tree.root, k);
                     _size--;
                     return (1);
                 }
                 return (0);
             }
+            void erase (iterator position)
+            {
+                erase((*position).first);
+            }
+            void erase (iterator first, iterator last)
+            {
+                std::vector<key_type> v1;
+                while (first != last)
+                {
+                    v1.push_back((*first).first);
+                    // erase(first);
+                    first++;
+                }
+                for (typename std::vector<key_type>::iterator it = v1.begin(); it != v1.end(); it++)
+                    erase(*it);
+                // {}
+
+            }
+
             iterator begin()
             {
-                return (iterator(_tree, _tree.minValueNode(_tree.root)));
+                return (iterator(&_tree, _tree.min_value_node()));
             }
             iterator end()
             {
-                return (iterator(_tree, 0));
+                return (iterator(&_tree, _tree.dummy_node));
             }
 	};
 }
