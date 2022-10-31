@@ -251,13 +251,20 @@ class Tree
 			return root;
 		}
 		public:
-            Node *findSuccessorIterative(key_type key)
+            Node *findSuccessorIterative(Node *node)
             {
-                return (findSuccessorIterative(root, key));
+                if (node == findMaximum(this->root))
+                    return dummy_node;
+                return (findSuccessorIterative(root, node->data.first));
             }
-            Node *findPredecessorIterative(key_type key)
+            Node *findPredecessorIterative(Node *node)
             {
-                return (findPredecessorIterative (root, key));
+                if (node == dummy_node)
+                {
+                    std::cout << "HELLO" << std::endl;
+                    return findMaximum(this->root);
+                }
+                return (findPredecessorIterative (root, node->data.first));
             }
         private:
             Node* findSuccessorIterative(Node *root, key_type key)
@@ -306,11 +313,6 @@ class Tree
 		}
 		Node* findPredecessorIterative(Node *rt, key_type key)
 		{
-            if (rt == dummy_node)
-            {
-                std::cout << "HELLO" << std::endl;
-                return findMaximum(this->root);
-            }
 			Node* pred = NULL;
 			while (true)
 			{

@@ -55,12 +55,12 @@ class iterator
         Node    *current()const {return _current;}
         iterator operator++()
         {
-            _current = _tree->findSuccessorIterative(_current->data.first);
+            _current = _tree->findSuccessorIterative(_current);
             return (iterator(_tree, _current));
         }
         iterator operator--()
         {
-            _current = _tree->findPredecessorIterative(_current->data.first);
+            _current = _tree->findPredecessorIterative(_current);
             return (iterator(_tree, _current));
         } 
 

@@ -23,15 +23,17 @@ int main()
     m.insert(ft::pair<int,int>(1,3));
     m.insert(ft::pair<int,int>(2,3));
     m.insert(ft::pair<int,int>(3,3));
-    ft::map<int,int>::iterator it = m.end();
+    ft::map<int,int>::iterator it = m.begin();
+    ++it;
+    ++it;
+    ++it;
     // ++it;
-    // --it;
     --it;
     // --it;
     // --it;
     // --it;
     // --it;
-    // ++it;
+    // --it;
     std::cout << it->first << std::endl;
     // for (it = m.end(); it != m.begin(); --it)
     // {
