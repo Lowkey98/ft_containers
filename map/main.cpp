@@ -20,25 +20,39 @@ int main()
     // a.inorder(a.root);
     // std::cout << a.findPredecessorIterative(a.root,110)->data.first;
     ft::map<int, int> m;
-    m.insert(ft::pair<int,int>(1,3));
     m.insert(ft::pair<int,int>(2,3));
+    m.insert(ft::pair<int,int>(1,3));
     m.insert(ft::pair<int,int>(3,3));
-    ft::map<int,int>::iterator it = m.begin();
-    ++it;
-    ++it;
-    ++it;
-    // ++it;
-    --it;
-    // --it;
-    // --it;
-    // --it;
-    // --it;
-    // --it;
-    std::cout << it->first << std::endl;
-    // for (it = m.end(); it != m.begin(); --it)
+    m.clear();
+    // m.erase(3);
+    // ft::map<int,int>::iterator it = m.begin();
+    // m.insert(ft::pair<int,int>(4,3));
+    // ft::map<int, int> m1;
+    // m1.insert(m.begin(), m.end());
+    // for (it = m1.begin(); it != m1.end(); ++it)
     // {
     //     std::cout << it->first << std::endl;
     // }
+    // m1.erase(m1.begin(), m1.end());
+    // ++it;
+    // ++it;
+    // ++it;
+    // --it;
+    // ++it;
+    // ++it;
+    // ++it;
+    // --it;
+    // ++it;
+    // --it;
+    // --it;
+    // --it;
+    // --it;
+    // std::cout << it->first << std::endl;
+    // m1.clear();
+	// for (it=mymap.begin(); it!=mymap.end(); it++)
+	// {
+	//     std::cout << it->first << " => " << it->second << '\n';
+	// }
     // ++it;
 	// a.insert(ft::pair<int,int>(30,3));
     // a.delete_node(30);
@@ -73,10 +87,6 @@ int main()
 	// mymap.insert (ft::pair<int,int>(3,7) );
 	// mymap._tree.inorder(mymap._tree.root);
 	// mymap.insert (ft::pair<int,int>(13,7) );
-	// for (it=mymap.begin(); it!=mymap.end(); it++)
-	// {
-	//     std::cout << it->first << " => " << it->second << '\n';
-	// }
 	// it++;
 		// std::cout << it->first << " => " << it->second << '\n';
 

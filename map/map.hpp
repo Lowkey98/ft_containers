@@ -2,7 +2,7 @@
 #include <functional>
 #include "../helper.hpp"
 #include "iterator.hpp"
-#include <vector>
+// #include "../vector/vector.hpp"
 namespace ft
 {
 	template < class Key,                                     // map::key_type
@@ -54,24 +54,25 @@ namespace ft
                 return std::make_pair(iterator(&_tree, _tree.min_value_node()), true);
             }
             template <class InputIterator>
-            // void insert (InputIterator first, InputIterator last)
-            // {
-            //     while (first != last)
-            //     {
-            //         insert(*first);
-            //         first++;
-            //     }
-            // }
+            void insert (InputIterator first, InputIterator last)
+            {
+                while (first != last)
+                {
+                    insert(*first);
+                    first++;
+                }
+            }
             size_type erase (const key_type& k)
             {
-                if (_tree.search(_tree.root, k))
+                if (_tree.search(k))
                 {
-                    // _tree.delete_node(_tree.root, k);
+                    _tree.delete_node(k);
                     _size--;
                     return (1);
                 }
                 return (0);
             }
+
             void erase (iterator position)
             {
                 erase((*position).first);
@@ -90,9 +91,17 @@ namespace ft
                 // {}
 
             }
+            void    clear()
+            {
+                // std::cout << _tree.root->data.first << std::endl;
+                _tree.post_order(&Tree::clear_node);
+                _size = 0;
 
+            }
             iterator begin()
             {
+                if (_size == 0)
+                    return iterator(&_tree, _tree.dummy_node);
                 return (iterator(&_tree, _tree.min_value_node()));
             }
             iterator end()

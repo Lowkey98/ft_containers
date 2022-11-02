@@ -27,7 +27,6 @@ class iterator
         iterator() : _tree(), _current()
         {
 
-            // (void)comp;
         }
         iterator(const iterator &it)
         {
@@ -55,10 +54,23 @@ class iterator
         Node    *current()const {return _current;}
         iterator operator++()
         {
+                    // std::cout << "TEST" << std::endl;
+            Node *tmp = _current;
+            _current = _tree->findSuccessorIterative(_current);
+            return (iterator(_tree, tmp));
+        }
+        iterator operator++(int)
+        {
             _current = _tree->findSuccessorIterative(_current);
             return (iterator(_tree, _current));
         }
         iterator operator--()
+        {
+            Node *tmp = _current;
+            _current = _tree->findPredecessorIterative(_current);
+            return (iterator(_tree, tmp));
+        }
+        iterator operator--(int)
         {
             _current = _tree->findPredecessorIterative(_current);
             return (iterator(_tree, _current));

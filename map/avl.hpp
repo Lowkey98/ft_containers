@@ -70,7 +70,23 @@ class Tree
 				current = current->left;
 			return current;
 		}
+        void    post_order(void(Tree::*func)(Node*) )
+        {
+            post_order(this->root, func);
+        }
+        void	clear_node(Node *node)
+		{
+			_node_allocator.destroy(node);
+			_node_allocator.deallocate(node, 1);
+		}
 	private:
+		Node *min_value_node(Node *root)
+		{
+			Node *current = root;
+			while (current->left != NULL)
+				current = current->left;
+			return current;
+		}
 		int height(Node *n)
 		{
 			if (n == NULL)
@@ -234,14 +250,15 @@ class Tree
 			preorder(node->left);
 			preorder(node->right);
 		}
-		void    postorder(Node* node)
-		{
-			if (node == NULL)
-				return ;
-			postorder(node->left);
-			postorder(node->right);
-			std::cout << node->data << std::endl;
-		}
+        void    post_order(Node* node, void (Tree::*func)(Node*) )
+        {
+            if (node == NULL)
+                return ;
+            post_order(node->left, func);
+            post_order(node->right, func);
+            (this->*func)(node);
+        }
+
 		Node* findMinimum(Node *root)
 		{
 			while(root->left != NULL)
@@ -251,17 +268,24 @@ class Tree
 			return root;
 		}
 		public:
+            void    print_node(Node *node)
+            {
+                std::cout << node->data.first << std::endl;
+            }
             Node *findSuccessorIterative(Node *node)
             {
-                if (node == findMaximum(this->root))
-                    return dummy_node;
+                if (node == dummy_node || node == NULL)
+                {
+                    std::cout << "TEST" << std::endl;
+                    return NULL;
+                }
                 return (findSuccessorIterative(root, node->data.first));
             }
             Node *findPredecessorIterative(Node *node)
             {
                 if (node == dummy_node)
                 {
-                    std::cout << "HELLO" << std::endl;
+                    // std::cout << "HELLO" << std::endl;
                     return findMaximum(this->root);
                 }
                 return (findPredecessorIterative (root, node->data.first));
@@ -271,6 +295,7 @@ class Tree
             {
 
             // Node *node = NULL;
+                    
                 Node *succ = NULL;
 
                 while (true)
@@ -296,10 +321,11 @@ class Tree
                     }
 
                     // key doesn't exist in binary tree
-                    if (root == NULL)
-                        return NULL;
+                    // if (root == NULL)
+                    //     return dummy_node;            
                 }
-
+                if (succ == NULL)
+                    return dummy_node;
                 // return Successor
                 return succ;
             }
