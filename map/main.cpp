@@ -22,8 +22,9 @@ int main()
     ft::map<int, int> m;
     m.insert(ft::pair<int,int>(2,3));
     m.insert(ft::pair<int,int>(1,3));
-    m.insert(ft::pair<int,int>(3,3));
-    m.clear();
+    m.insert(ft::pair<int,int>(3,5));
+    m.find(3);
+    // m[2] = 10;
     // m.erase(3);
     // ft::map<int,int>::iterator it = m.begin();
     // m.insert(ft::pair<int,int>(4,3));

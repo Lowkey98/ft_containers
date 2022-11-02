@@ -56,12 +56,9 @@ class Tree
 			std::cout << node->data.first << std::endl; 
 			inorder(node->right);
 		}
-        bool search(key_type key)
+        Node* search(key_type key)
         {
-            Node *node = search(root, key);
-            if (node == NULL)
-                return 0;
-            return 1;
+            return search(root, key);
         }
 		Node *min_value_node()
 		{

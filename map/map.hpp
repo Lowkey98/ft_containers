@@ -44,14 +44,14 @@ namespace ft
             }
             iterator find (const key_type& k)
             {
-                return (iterator(_tree, _tree.search(_tree.root, k)));
+                return (iterator(&_tree, _tree.search(k)));
             }
-            std::pair<iterator,bool> insert (const value_type& val)
+            ft::pair<iterator,bool> insert (const value_type& val)
             {
                 if (_tree.search(val.first))
-                    return std::make_pair(iterator(&_tree, NULL), false);
+                    return ft::make_pair(iterator(&_tree, NULL), false);
                 _tree.insert(val);
-                return std::make_pair(iterator(&_tree, _tree.min_value_node()), true);
+                return ft::make_pair(iterator(&_tree, _tree.min_value_node()), true);
             }
             template <class InputIterator>
             void insert (InputIterator first, InputIterator last)
@@ -107,6 +107,18 @@ namespace ft
             iterator end()
             {
                 return (iterator(&_tree, _tree.dummy_node));
+            }
+            mapped_type& operator[] (const key_type& k)
+            {
+                this->insert(make_pair(k,mapped_type()));
+                return (_tree.search(k)->data.second);
+            }
+            mapped_type& at (const key_type& k)
+            {
+                Node *node = _tree.search(k);
+                if (node == NULL)
+                    throw std::out_of_range("out of range");
+                return (node->data.second);
             }
 	};
 }
