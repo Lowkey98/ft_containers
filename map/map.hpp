@@ -12,19 +12,21 @@ namespace ft
 			> class map
 	{
 		public:
-			typedef Key								key_type;
-			typedef T								mapped_type;
-			typedef Compare							key_compare;
-			typedef Alloc							allocator_type;
-			typedef pair<Key,T>						value_type;
-            typedef iterator<Key,T>					iterator;
-			typedef Tree<Key,T, Compare, Alloc>		Tree;
-			typedef size_t							size_type;
-            typedef Node<value_type>				Node;
+			typedef Key								        key_type;
+			typedef T								        mapped_type;
+			typedef Compare							        key_compare;
+			typedef Alloc							        allocator_type;
+			typedef pair<Key,T>						        value_type;
+            typedef iterator<Key,T>					        iterator;
+            typedef reverse_iterator<Key,T>					reverse_iterator;
+			typedef Tree<Key,T, Compare, Alloc>		        Tree;
+			typedef size_t							        size_type;
+            typedef Node<value_type>				        Node;
 		private:
 			allocator_type		_allocator;
 			size_type			_size;
 			Tree				_tree;
+            key_compare         _compare;
         // private:
 
 		public:
@@ -51,6 +53,7 @@ namespace ft
                 if (_tree.search(val.first))
                     return ft::make_pair(iterator(&_tree, NULL), false);
                 _tree.insert(val);
+                _size++;
                 return ft::make_pair(iterator(&_tree, _tree.min_value_node()), true);
             }
             template <class InputIterator>
@@ -59,6 +62,7 @@ namespace ft
                 while (first != last)
                 {
                     insert(*first);
+
                     first++;
                 }
             }
@@ -119,6 +123,55 @@ namespace ft
                 if (node == NULL)
                     throw std::out_of_range("out of range");
                 return (node->data.second);
+            }
+            bool empty() const
+            {
+                return _size;
+            }
+            size_type size() const
+            {
+                return (_size);
+            }
+            key_compare key_comp() const
+            {
+                return (_compare);
+            }
+            iterator lower_bound (const key_type& k)
+            {
+                iterator it = begin();
+                while (_compare((*it).first, k))
+                    it++;
+                return it;
+            }
+            iterator upper_bound (const key_type& k)
+            {
+                iterator it = begin();
+                while (_compare((*it).first, k))
+                {
+                    it++;
+                }
+                return it++;
+            }
+            pair<iterator,iterator> equal_range (const key_type& k)
+            {
+                return (ft::make_pair(lower_bound(k), upper_bound(k)));
+            }
+            allocator_type get_allocator() const
+            {
+                return _allocator;
+            }
+            void swap(map &x)
+            {
+                std::swap(this->_tree, x._tree);
+                std::swap(this->_size, x._size);
+            }
+            reverse_iterator rbegin()
+            {
+                return reverse_iterator(end());
+            }
+            reverse_iterator rend()
+            {
+                return reverse_iterator(begin());
             }
 	};
 }

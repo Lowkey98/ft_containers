@@ -273,7 +273,7 @@ class Tree
             {
                 if (node == dummy_node || node == NULL)
                 {
-                    std::cout << "TEST" << std::endl;
+                    // std::cout << "TEST" << std::endl;
                     return NULL;
                 }
                 return (findSuccessorIterative(root, node->data.first));

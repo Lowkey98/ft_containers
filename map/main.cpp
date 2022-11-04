@@ -19,11 +19,31 @@ int main()
 
     // a.inorder(a.root);
     // std::cout << a.findPredecessorIterative(a.root,110)->data.first;
-    ft::map<int, int> m;
-    m.insert(ft::pair<int,int>(2,3));
-    m.insert(ft::pair<int,int>(1,3));
-    m.insert(ft::pair<int,int>(3,5));
-    m.find(3);
+    std::map<int, int> m;
+    m.insert(std::pair<int,int>(1,3));
+    m.insert(std::pair<int,int>(2,3));
+    m.insert(std::pair<int,int>(3,5));
+    m.insert(std::pair<int,int>(4,5));
+    // std::map<int, int>::reverse_iterator r_it = m.rbegin();
+    // std::cout << (*r_it).first << std::endl;
+    // std::map<int, int>::reverse_iterator r_it = m.rbegin();
+    // std::cout << (*r_it).first << std::endl;
+    for (std::map<int, int>::reverse_iterator r_it = m.rbegin(); r_it != m.rend(); ++r_it)
+    {
+        // std::cout << r_it[3].first;
+        std::cout << (*r_it).first  << "base: " << (*r_it.base()).first << std::endl;
+    }
+    
+    // ft::map<int, int> m1;
+    // m1.insert(ft::pair<int,int>(11,3));
+    // m1.insert(ft::pair<int,int>(21,3));
+    // m1.insert(ft::pair<int,int>(31,5));
+    // m1.insert(ft::pair<int,int>(41,5));
+    // m.swap(m1);
+    // allocate an array of 5 elements using mymap's allocator:
+// std::cout << (*m._bound(2)).first << std::endl;
+    // ft::map<int,int>::key_compare mycomp = m.key_comp();
+    // std::cout << mycomp(2,3);
     // m[2] = 10;
     // m.erase(3);
     // ft::map<int,int>::iterator it = m.begin();
