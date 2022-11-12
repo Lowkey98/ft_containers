@@ -11,6 +11,7 @@ class Node
 		unsigned int height;
 	public:
 		Node(T &d) :data(d), height(1){}
+
 };
 
 template <class Key,
@@ -25,7 +26,7 @@ class Tree
 		typedef T								mapped_type;
 		typedef Compare							key_compare;
 		typedef Alloc							allocator_type;
-		typedef ft::pair<Key,T>                 value_type;
+		typedef ft::pair<const Key,T>                 value_type;
 		typedef Node<value_type>                Node;
     public:
         Node                                                    *dummy_node;
@@ -36,6 +37,7 @@ class Tree
 		allocator_type											_allocator;
 		typename allocator_type::template rebind<Node>::other	_node_allocator;
 	public:
+
 		Tree(): root(NULL)
         {
             dummy_node = _node_allocator.allocate(1);
@@ -56,7 +58,7 @@ class Tree
 			std::cout << node->data.first << std::endl; 
 			inorder(node->right);
 		}
-        Node* search(key_type key)
+        Node* search(key_type key) const
         {
             return search(root, key);
         }
@@ -198,7 +200,9 @@ class Tree
 					return temp;
 				}
 				Node* temp = min_value_node(root->right);
-				root->data.first = temp->data.first;
+                _allocator.destroy(&root->data);
+                _allocator.construct(&root->data, temp->data);
+
 				root->right = delete_node(root->right, temp->data.first);
 			}
 			if (root == NULL)
@@ -221,22 +225,22 @@ class Tree
 			}
 			return root;
 		}
-		Node* search(Node *root, key_type key)
+		Node* search(Node *root, key_type key) const
 		{
 			if (root == NULL)
 				return NULL;
-			else if (root->data.first == key)
-				return root;
-			else if (root->data.first > key)
-			{
+            else if (_compare(key, root->data.first))
+            {
 				Node* rt = search(root->left, key);
 				return rt;
-			}
-			else
+            }
+			else if (_compare(root->data.first, key))
 			{
 				Node* rt = search(root->right, key);
 				return rt;
 			}
+			else 
+				return root;
 		}
 
 		void    preorder(Node* node)
@@ -256,7 +260,7 @@ class Tree
             (this->*func)(node);
         }
 
-		Node* findMinimum(Node *root)
+		Node* findMinimum(Node *root) const
 		{
 			while(root->left != NULL)
 			{
@@ -269,7 +273,7 @@ class Tree
             {
                 std::cout << node->data.first << std::endl;
             }
-            Node *findSuccessorIterative(Node *node)
+            Node *findSuccessorIterative(Node *node) const
             {
                 if (node == dummy_node || node == NULL)
                 {
@@ -278,7 +282,25 @@ class Tree
                 }
                 return (findSuccessorIterative(root, node->data.first));
             }
-            Node *findPredecessorIterative(Node *node)
+            Node *findPredecessorIterative(Node *node) const
+            {
+                if (node == dummy_node)
+                {
+                    // std::cout << "HELLO" << std::endl;
+                    return findMaximum(this->root);
+                }
+                return (findPredecessorIterative (root, node->data.first));
+            }
+            const Node *findSuccessorIterative(const Node *node) const
+            {
+                if (node == dummy_node || node == NULL)
+                {
+                    // std::cout << "TEST" << std::endl;
+                    return NULL;
+                }
+                return (findSuccessorIterative(root, node->data.first));
+            }
+            const Node *findPredecessorIterative(const Node *node) const
             {
                 if (node == dummy_node)
                 {
@@ -288,7 +310,7 @@ class Tree
                 return (findPredecessorIterative (root, node->data.first));
             }
         private:
-            Node* findSuccessorIterative(Node *root, key_type key)
+            Node* findSuccessorIterative(Node *root, key_type key) const
             {
 
             // Node *node = NULL;
@@ -328,20 +350,20 @@ class Tree
             }
 
 
-		Node* findMaximum(Node* root)
+		Node* findMaximum(Node* root) const
 		{
 			while(root->right)
 				root = root->right;		
 			return root;
 		}
-		Node* findPredecessorIterative(Node *rt, key_type key)
+		Node* findPredecessorIterative(Node *rt, key_type key) const
 		{
 			Node* pred = NULL;
 			while (true)
 			{
 			// if node value is greater than key, go to left subtree
-				if (key < rt->data.first)
-					rt = rt->left;
+			if (key < rt->data.first)
+				rt = rt->left;
 			// if node value is less than key, go to right subtree
 			else if (key > rt->data.first)
 			{

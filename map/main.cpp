@@ -1,5 +1,7 @@
-#include "avl.hpp"
+// #include "avl.hpp"
 #include <map>
+#include<iostream>
+#include <ostream>
 #include "map.hpp"
 #include "../helper.hpp"
 int main()
@@ -19,22 +21,36 @@ int main()
 
     // a.inorder(a.root);
     // std::cout << a.findPredecessorIterative(a.root,110)->data.first;
-    std::map<int, int> m;
-    m.insert(std::pair<int,int>(1,3));
-    m.insert(std::pair<int,int>(2,3));
-    m.insert(std::pair<int,int>(3,5));
-    m.insert(std::pair<int,int>(4,5));
+    // std::map<int, int> m;
+    // m.insert(std::pair<int,int>(1,3));
+    // m.insert(std::pair<int,int>(2,3));
+    // m.insert(std::pair<int,int>(3,5));
+    // std::map<int, int>::iterator it;
+        // std::map<int, int> mymap;
+        // std::map<int,int>::iterator it;
+        // mymap.insert(std::pair<int,int>(5,1));
+        // mymap.insert(std::pair<int,int>(4,1));
+        // mymap.insert(std::pair<int,int>(4,1));
+
+        // it = mymap.end();
+        // std::cout << "std: " << it->first << std::endl;
+        // std::cout << std::is_same<std::map<int,int>::iterator::value_type ,std::map<int,int>::const_iterator::value_type>::value << std::endl;
+    // it = (m.equal_range(3).first);
+    // it = m.begin();
+    // std::cout << it->first << std::endl;
+    // it++;
+    // (*it).first = 5;
+    // (*it).second = 5;
+    // it++;
     // std::map<int, int>::reverse_iterator r_it = m.rbegin();
     // std::cout << (*r_it).first << std::endl;
     // std::map<int, int>::reverse_iterator r_it = m.rbegin();
     // std::cout << (*r_it).first << std::endl;
-    for (std::map<int, int>::reverse_iterator r_it = m.rbegin(); r_it != m.rend(); ++r_it)
-    {
-        // std::cout << r_it[3].first;
-        std::cout << (*r_it).first  << "base: " << (*r_it.base()).first << std::endl;
-    }
-    
-    // ft::map<int, int> m1;
+    // for (std::map<int, int>::reverse_iterator r_it = m.rbegin(); r_it != m.rend(); ++r_it)
+    // {
+    //     // std::cout << r_it[3].first;
+    //     std::cout << (*r_it).first  << "base: " << (*r_it.base()).first << std::endl;
+    // }
     // m1.insert(ft::pair<int,int>(11,3));
     // m1.insert(ft::pair<int,int>(21,3));
     // m1.insert(ft::pair<int,int>(31,5));
@@ -98,9 +114,6 @@ int main()
 	// mymap.erase(1);
 	// mymap.erase(3);
 	// mymap.erase(13);
-	// mymap.insert (ft::pair<int,int>(1,3) );
-	// mymap.insert (ft::pair<int,int>(13,7) );
-	// mymap.insert (ft::pair<int,int>(4,7) );
 	// mymap.insert (ft::pair<int,int>(4,7) );
 	// mymap.erase(4);
 	// mymap.insert (ft::pair<int,int>(8,7) );
@@ -110,6 +123,19 @@ int main()
 	// mymap.insert (ft::pair<int,int>(13,7) );
 	// it++;
 		// std::cout << it->first << " => " << it->second << '\n';
-
+    ft::Map<int, int> mymap;
+	mymap.insert (ft::pair<int,int>(1,3) );
+	mymap.insert (ft::pair<int,int>(13,7) );
+	mymap.insert (ft::pair<int,int>(4,7) );
+    // ft::const_reverse_iterator<ft::Map<int, int>::iterator> r_it(mymap.end());
+    // r_it--;
+    ft::const_reverse_iterator<ft::Map<int, int>::iterator> cr_it(mymap.end());
+    // std::cout << r_it->first << std::endl;
+    // const ft::Map<int,int> m(mymap.begin(), mymap.end());
+    // const ft::Map<int,int> m(mymap.begin(), mymap.end());
+    // const ft::Map<int,int>::const_iterator a = m.begin();
+    
+    // m.insert(std::pair<int, int>(1,3));
+    // ft::Map<int,int>::const_iterator it(&T1, T1.root);
 	return 0;
 }

@@ -62,6 +62,13 @@
         "string_view": "cpp",
         "system_error": "cpp",
         "typeinfo": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "deque": "cpp",
+        "set": "cpp",
+        "memory_resource": "cpp",
+        "numeric": "cpp",
+        "random": "cpp",
+        "stack": "cpp",
+        "iomanip": "cpp"
     }
 }
