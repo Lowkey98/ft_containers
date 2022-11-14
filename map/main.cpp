@@ -123,13 +123,34 @@ int main()
 	// mymap.insert (ft::pair<int,int>(13,7) );
 	// it++;
 		// std::cout << it->first << " => " << it->second << '\n';
-    ft::Map<int, int> mymap;
-	mymap.insert (ft::pair<int,int>(1,3) );
-	mymap.insert (ft::pair<int,int>(13,7) );
-	mymap.insert (ft::pair<int,int>(4,7) );
+        // ft::Map<int, std::string> my_m;
+        // std::map<int, std::string> m;
+        // for (int i = 0; i < 10; i++)
+        // {
+        //     m.insert(std::make_pair(i, "Hello"));
+        //     my_m.insert(ft::make_pair(i, "Hello"));
+        // }
+                int myints[] = {12, 82, 37, 64, 15};
+            ft::Map<int, int> m1;
+                m1.insert(ft::make_pair(myints[0], 0));
+                m1.insert(ft::make_pair(myints[1], 1));
+                // m1.insert(ft::make_pair(myints[2], 1));
+            std::cout << "-------" << std::endl;
+            ft::Map<int, int> m2(m1);
+            // m2.insert(m1.begin(), m1.end());
+            // for (ft::Map<int,int>::iterator it = m2.begin(); it != m2.end(); it++)
+            //     std::cout << (*it).first << std::endl;
+
+	// mymap.insert (ft::make_pair<int,std::string>(4,"ayoub") );
+    // for (ft::Map<int, std::string>::iterator it = mymap.begin(); it != mymap.end(); ++it)
+    // {
+    //     // exit(0);
+    //     std::cout << it->first << std::endl;
+    //     // std::cout << "HELLO" << std::endl;
+    // }
     // ft::const_reverse_iterator<ft::Map<int, int>::iterator> r_it(mymap.end());
     // r_it--;
-    ft::const_reverse_iterator<ft::Map<int, int>::iterator> cr_it(mymap.end());
+    // ft::const_reverse_iterator<ft::Map<int, int>::iterator> cr_it(mymap.end());
     // std::cout << r_it->first << std::endl;
     // const ft::Map<int,int> m(mymap.begin(), mymap.end());
     // const ft::Map<int,int> m(mymap.begin(), mymap.end());

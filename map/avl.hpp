@@ -6,11 +6,11 @@ class Node
 {
 	public:
 		T  data;
+		unsigned int height;
 		Node<T> *left;
 		Node<T> *right;
-		unsigned int height;
 	public:
-		Node(T &d) :data(d), height(1){}
+		Node(const T &d) :data(d), height(1), left(NULL), right(NULL){}
 
 };
 
@@ -38,12 +38,15 @@ class Tree
 		typename allocator_type::template rebind<Node>::other	_node_allocator;
 	public:
 
-		Tree(): root(NULL)
+		Tree(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):
+		 root(NULL), _size(0), _compare(comp), _allocator(alloc)
         {
             dummy_node = _node_allocator.allocate(1);
         }
-		void	insert(value_type data)
+		void	insert(const value_type &data)
 		{
+			std::cout << data.first << std::endl;
+                std::cout << "TEEST" << std::endl;
 			root = insert(root, data);
 		}
 		void	delete_node(key_type key)
@@ -77,6 +80,14 @@ class Tree
 		{
 			_node_allocator.destroy(node);
 			_node_allocator.deallocate(node, 1);
+		}
+		allocator_type get_allocator() const
+		{
+			return _allocator;
+		}
+		key_compare get_compare() const
+		{
+			return (_compare);
 		}
 	private:
 		Node *min_value_node(Node *root)
@@ -135,12 +146,15 @@ class Tree
 			// y->height = max(y->left->height, y->right->height) + 1;
 			return y;
 		}
-		Node* insert(Node *node, value_type data)
+		Node* insert(Node *node, const value_type &data)
 		{
+                // std::cout << "INSERT VALUE" << std::endl;
 			if (node == NULL)
 			{
 				Node * new_node = _node_allocator.allocate(1);
-				_allocator.construct(new_node, data);
+				_node_allocator.construct(new_node, data);
+            	std::cout << "INSERT VALUE" << std::endl;
+				// exit(1);
 				return (new_node);
 			}
 			if (_compare(data.first, node->data.first))
@@ -229,7 +243,7 @@ class Tree
 		{
 			if (root == NULL)
 				return NULL;
-            else if (_compare(key, root->data.first))
+			else if (_compare(key, root->data.first))
             {
 				Node* rt = search(root->left, key);
 				return rt;
