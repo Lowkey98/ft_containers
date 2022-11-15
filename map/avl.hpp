@@ -30,23 +30,22 @@ class Tree
 		typedef Node<value_type>                Node;
     public:
         Node                                                    *dummy_node;
+		Node													*inserted_node;
+		unsigned int											size;
 	private:
 		Node                                                    *root;
-		unsigned int											_size;
 		key_compare												_compare;
 		allocator_type											_allocator;
 		typename allocator_type::template rebind<Node>::other	_node_allocator;
 	public:
 
 		Tree(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):
-		 root(NULL), _size(0), _compare(comp), _allocator(alloc)
+		 size(0),root(NULL), _compare(comp), _allocator(alloc)
         {
             dummy_node = _node_allocator.allocate(1);
         }
 		void	insert(const value_type &data)
 		{
-			std::cout << data.first << std::endl;
-                std::cout << "TEEST" << std::endl;
 			root = insert(root, data);
 		}
 		void	delete_node(key_type key)
@@ -58,7 +57,6 @@ class Tree
 			if (node == NULL)
 				return ;
 			inorder(node->left);
-			std::cout << node->data.first << std::endl; 
 			inorder(node->right);
 		}
         Node* search(key_type key) const
@@ -66,6 +64,15 @@ class Tree
             return search(root, key);
         }
 		Node *min_value_node()
+		{
+			// if (root == NULL)
+			// 	return NULL;
+			Node *current = this->root;
+			while (current->left != NULL)
+				current = current->left;
+			return current;
+		}
+		Node *min_value_node() const
 		{
 			Node *current = this->root;
 			while (current->left != NULL)
@@ -79,7 +86,7 @@ class Tree
         void	clear_node(Node *node)
 		{
 			_node_allocator.destroy(node);
-			_node_allocator.deallocate(node, 1);
+			// _node_allocator.deallocate(node, 1);
 		}
 		allocator_type get_allocator() const
 		{
@@ -89,6 +96,46 @@ class Tree
 		{
 			return (_compare);
 		}
+		Node*	lower_bound(const key_type & key) const
+		{
+			Node	*temp = this->root;
+			Node	*lower_bound = NULL;
+
+			while (temp != NULL)
+			{
+				if (!_compare(temp->data.first, key) && !_compare(key, temp->data.first))
+				{
+					lower_bound = temp;
+					break ;
+				}
+				if (_compare(key, temp->data.first) == true) // move to left
+				{
+					lower_bound = temp;
+					temp = temp->left;
+				}
+				else // move to right
+					temp = temp->right;
+			}
+			return (lower_bound);
+		}
+		Node*	upper_bound(const key_type & key) const
+		{
+			Node	*temp = this->root;
+			Node	*upper_bound = NULL;
+
+			while (temp != NULL)
+			{
+				if (_compare(key, temp->data.first) == true) // move to left
+				{
+					upper_bound = temp;
+					temp = temp->left;
+				}
+				else // move to right
+					temp = temp->right;
+			}
+			return (upper_bound);
+		}
+
 	private:
 		Node *min_value_node(Node *root)
 		{
@@ -153,7 +200,8 @@ class Tree
 			{
 				Node * new_node = _node_allocator.allocate(1);
 				_node_allocator.construct(new_node, data);
-            	std::cout << "INSERT VALUE" << std::endl;
+				inserted_node = new_node;
+				size++;
 				// exit(1);
 				return (new_node);
 			}
@@ -162,6 +210,10 @@ class Tree
 			else if (_compare(node->data.first, data.first))
 			{
 				node->right = insert(node->right, data);
+			}
+			else
+			{
+				inserted_node = node;
 			}
 			// exit(1);
 			node->height = 1 + max(height(node->left), height(node->right));
@@ -261,7 +313,6 @@ class Tree
 		{
 			if (node == NULL)
 				return ;
-			std::cout << node->data << std::endl;
 			preorder(node->left);
 			preorder(node->right);
 		}
@@ -283,6 +334,13 @@ class Tree
 			return root;
 		}
 		public:
+			void swap(Tree &x)
+			{
+				std::swap(this->root, x.root);
+				std::swap(this->size, x.size);
+				std::swap(this->_compare, x._compare);
+				std::swap(this->_allocator, x._allocator);
+			}
             void    print_node(Node *node)
             {
                 std::cout << node->data.first << std::endl;
@@ -334,7 +392,7 @@ class Tree
                 while (true)
                 {
                     // if the node is greater than key, go to left subtree
-                    if (key < root->data.first)
+                    if (_compare(key, root->data.first))
                     {
                         // update successor to current node
                         succ = root;
@@ -342,7 +400,7 @@ class Tree
                     }
 
                     // if the node is less than the key, go to right subtree
-                    else if (key > root->data.first)
+                    else if (_compare(root->data.first, key))
                         root = root->right;
                     // if node has same value as the key, 
                     // then its successor is minimum value node in its right subtree
@@ -376,10 +434,10 @@ class Tree
 			while (true)
 			{
 			// if node value is greater than key, go to left subtree
-			if (key < rt->data.first)
+			if (_compare(key, rt->data.first))
 				rt = rt->left;
 			// if node value is less than key, go to right subtree
-			else if (key > rt->data.first)
+			else if (_compare(rt->data.first, key))
 			{
 				// update predecessor to current node
 				pred = rt;

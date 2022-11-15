@@ -2,29 +2,31 @@
 #include <iostream>
 #include "iterator.hpp"
 #include "../helper.hpp"
+#include "../reverse_iterator.hpp"
 namespace ft
 {
 	template <class T, class Allocator = std::allocator<T> >  
-	class vector
+	class Vector
 	{
         public:
             typedef T value_type;
-            typedef T& reference;
+            typedef Allocator allocator_type;
+            
+            typedef typename allocator_type::reference reference;
             typedef std::size_t size_type;
             typedef ft::iterator<T> iterator;
             typedef ft::reverse_iterator<T> reverse_iterator;
             typedef ft::const_iterator<T> const_iterator;
             typedef ft::const_reverse_iterator<T> const_reverse_iterator;
-            typedef Allocator allocator_type;
 		public:
-            explicit vector (const allocator_type& alloc = allocator_type())
+            explicit Vector (const allocator_type& alloc = allocator_type())
             {
                 _allocator = alloc;
                 _buff = NULL;
                 _size = 0;
                 _capacity = 0;
             }
-            explicit vector (size_type n, const value_type& val = value_type(),
+            explicit Vector (size_type n, const value_type& val = value_type(),
                 const allocator_type& alloc = allocator_type())
             {
                 _allocator = alloc;
@@ -35,7 +37,7 @@ namespace ft
                     _allocator.construct(&_buff[i],val);
             }
             template <class InputIterator>
-            vector (InputIterator first, InputIterator last,
+            Vector (InputIterator first, InputIterator last,
                  const allocator_type& alloc = allocator_type())
             {
                 size_type n = ft::distance(last, first);
@@ -142,7 +144,7 @@ namespace ft
             }
             bool empty() const {return _size == 0;}
             reference operator[](size_type n){ return (_buff[n]);}
-            void    swap(vector&x)
+            void    swap(Vector &x)
             {
                 std::swap(this->_buff, x._buff);
                 std::swap(this->_size, x._size);

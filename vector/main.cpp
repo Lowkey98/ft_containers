@@ -1,12 +1,12 @@
 #include "vector.hpp"
 #include "../helper.hpp"
-#include "iterator_traits.hpp"
+#include "../iterator_traits.hpp"
 #include <vector>
 #include <cstdio>
 #include <iterator>
 
 template <class T>  
-void pr(ft::vector<T> &a)
+void pr(ft::Vector<T> &a)
 {
     printf("size = %lu  capacity = %lu\n", a.size(), a.capacity());
     std::cout << "elements: ";
@@ -45,8 +45,8 @@ void pr(std::vector<T> &a)
 int main()
 {
     // {
-    ft::vector<int> v1;
-    ft::vector<int> v2;
+    ft::Vector<int> v1;
+    ft::Vector<int> v2;
     v1.push_back(1);
     v1.push_back(2);
     v1.push_back(3);

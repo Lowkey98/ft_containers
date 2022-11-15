@@ -43,11 +43,12 @@ class map_iterator
 	public:
 		map_iterator() :_tree(NULL), _current(NULL)
 		{
-
 		}
-		map_iterator(const map_iterator &it)
+		map_iterator(const map_iterator &it) :_tree(it._tree), _current(it._current)
 		{
-			*this = it;
+			// exit(0);
+			// std::cout << "VALUE" << (_current->data.first) << std::endl;
+			// *this = it;
 		}
 
 		map_iterator(Tree *tr, Node *cr): _tree(tr), _current(cr)
@@ -115,6 +116,7 @@ class map_iterator
             // return 1;
             return (this->_current != rhs._current);
         }
+
 
 };
 

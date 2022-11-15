@@ -1,18 +1,24 @@
 #pragma once
-#include "vector.hpp"
+// #include "vector.hpp"
+
 
 namespace ft
 {
+    template <class T>
+    class const_iterator;
+
     template  <class T>
     class iterator
     {
         public:
             typedef T value_type;
+            typedef T* pointer;
+            typedef T& reference;
         public:
             iterator(){};
             iterator(value_type *v)
             {
-                ptr = v;
+                this->ptr = v;
             }
             iterator(const iterator &it)
             {
@@ -20,7 +26,7 @@ namespace ft
             }
             iterator &operator=(const iterator &it)
             {
-                ptr = it.base();
+                this->ptr = it.base();
                 return *this;
             }
             ~iterator(){};
@@ -30,8 +36,14 @@ namespace ft
             bool operator<=(const iterator &it) {return (this->ptr <= it.base());}
             bool operator>=(const iterator &it) {return (this->ptr >= it.base());}
             bool operator>(const iterator &it) {return (this->ptr > it.base());}
-            value_type& operator*() {return *ptr;}
-            value_type* operator->() {return ptr;}
+            
+            template <class it>
+            operator const_iterator<it>()
+            {
+                return const_iterator<it>();
+            }
+            reference operator*() {return *ptr;}
+            pointer operator->() {return ptr;}
             iterator operator ++()
             {
                 ptr++;
@@ -73,41 +85,40 @@ namespace ft
                 ptr -= n;
                 return (*this);
             }
-            value_type & operator[](int n) {return ptr[n];}
-            value_type *base() const{return ptr;}
-            
+            reference operator[](int n) {return ptr[n];}
+            pointer base() const{return ptr;}
+
+                
 
         private:
-            value_type *ptr;
+            pointer ptr;
     };
-
-    template <class it>
-    bool operator !=(const it &lhs, const it &rhs)
+    template<class T>
+    iterator<T> operator+(int n, const iterator<T> &rhs)
     {
-        return (lhs.get_ptr() != rhs.get_ptr());
+        return rhs + n;
     }
 
-    // template <class it>
-    // bool operator ==(const it &lhs, const it &rhs)
-    // {
-    //     return (lhs.get_ptr() == rhs.get_ptr());
-    // }
 
-    template <class T>
+
+
+
+    template  <class T>
     class const_iterator
     {
         public:
-            typedef T value_type;
-            typedef ft::iterator<T> iterator;
+            typedef T   value_type;
+            typedef const T*  pointer;
+            typedef const T&  reference;
         public:
             const_iterator(){};
-            const_iterator(const value_type *v) :ptr(v)
+            const_iterator(value_type *v)
             {
-                // ptr = v;
+                ptr = v;
             }
-            const_iterator(const iterator &it) : ptr(it.base())
+            const_iterator(const const_iterator &it)
             {
-                // *this = it;
+                *this = it;
             }
             const_iterator &operator=(const const_iterator &it)
             {
@@ -121,7 +132,8 @@ namespace ft
             bool operator<=(const const_iterator &it) {return (this->ptr <= it.base());}
             bool operator>=(const const_iterator &it) {return (this->ptr >= it.base());}
             bool operator>(const const_iterator &it) {return (this->ptr > it.base());}
-            const value_type operator*() {return *ptr;}
+            reference operator*() {return *ptr;}
+            pointer operator->() {return ptr;}
             const_iterator operator ++()
             {
                 ptr++;
@@ -146,7 +158,7 @@ namespace ft
             }
             const_iterator operator-(int n)
             {
-                return(const_iterator((this->base() - n)));
+                return(const_iterator(this->base() - n));
             }
             const_iterator operator+(int n)
             {
@@ -163,99 +175,27 @@ namespace ft
                 ptr -= n;
                 return (*this);
             }
-            value_type & operator[](int n) {return ptr[n];}
-            const value_type *base() const{return ptr;}
+            reference operator[](int n) {return ptr[n];}
+            value_type *base() const{return ptr;}
+            
+
         private:
-            const value_type *ptr;
+            value_type *ptr;
     };
-    // template <class T>
-    // class reverse_iterator
+    template<class T>
+    const_iterator<T> operator+(int n, const const_iterator<T> &rhs)
+    {
+        return rhs + n;
+    }
+    // template <class it>
+    // bool operator !=(const it &lhs, const it &rhs)
     // {
-    //     public:
-    //         typedef T value_type;
-    //         typedef ft::iterator<T> iterator;
-    //     public:
-    //         reverse_iterator(){};
-    //         // reverse_iterator(value_type *ptr){this->ptr = ptr;};
-    //         reverse_iterator(iterator &it) : _base(it.base()) {}
-    //         explicit reverse_iterator(iterator it)
-    //         {
-    //             _base = it;
-    //         }
-    //         value_type & operator*()
-    //         {
-    //             return(*(_base - 1));
-    //         }
-    //         reverse_iterator operator+(int n){return (reverse_iterator(base() - n));}
-    //         reverse_iterator operator-(int n){return (reverse_iterator(base() + n));}
-    //         bool operator==(const reverse_iterator &it) {return (this->ptr == it.base());}
-    //         bool operator!=(const reverse_iterator &it) {return (this->ptr != it.base());}
-    //         bool operator<(const reverse_iterator &it) {return (this->ptr < it.base());}
-    //         bool operator<=(const reverse_iterator &it) {return (this->ptr <= it.base());}
-    //         bool operator>=(const reverse_iterator &it) {return (this->ptr >= it.base());}
-    //         bool operator>(const reverse_iterator &it) {return (this->ptr > it.base());}
-    //         reverse_iterator &operator+=(int n)
-    //         {
-    //             _base-=n;
-    //             return (*this);
-    //         }
-    //         reverse_iterator &operator-=(int n)
-    //         {
-    //             _base+=n;
-    //             return (*this);
-    //         }
-    //         iterator base()const{return (_base);}
-
-    //     private:
-    //         iterator _base;
-    // };
-    // template <class T>
-    // class const_reverse_iterator
+    //     return (lhs.get_ptr() != rhs.get_ptr());
+    // }
+    // template <class it>
+    // bool operator ==(const it &lhs, const it &rhs)
     // {
-    //     public:
-    //         typedef T value_type;
-    //         typedef ft::const_iterator<T> const_iterator;
-    //         typedef ft::reverse_iterator<T> reverse_iterator;
+    //     return (lhs.get_ptr() == rhs.get_ptr());
+    // }
 
-    //     public:
-    //         const_reverse_iterator(){};
-    //         const_reverse_iterator(const reverse_iterator &it) : _base(it.base())
-    //         {
-    //             // *this = it;
-    //         }
-    //         const_reverse_iterator &operator=(const const_reverse_iterator &it)
-    //         {
-    //             _base = it.base();
-    //             return *this;
-    //         }
-    //         explicit const_reverse_iterator(const_iterator it)
-    //         {
-    //             _base = it;
-    //         }
-    //         const value_type operator*()
-    //         {
-    //             return(*(_base - 1));
-    //         }
-    //         const_reverse_iterator operator+(int n){return (const_reverse_iterator(base() - n));}
-    //         const_reverse_iterator operator-(int n){return (const_reverse_iterator(base() + n));}
-    //         bool operator==(const const_reverse_iterator &it) {return (this->ptr == it.base());}
-    //         bool operator!=(const const_reverse_iterator &it) {return (this->ptr != it.base());}
-    //         bool operator<(const const_reverse_iterator &it) {return (this->ptr < it.base());}
-    //         bool operator<=(const const_reverse_iterator &it) {return (this->ptr <= it.base());}
-    //         bool operator>=(const const_reverse_iterator &it) {return (this->ptr >= it.base());}
-    //         bool operator>(const const_reverse_iterator &it) {return (this->ptr > it.base());}
-    //         const_reverse_iterator &operator+=(int n)
-    //         {
-    //             _base-=n;
-    //             return (*this);
-    //         }
-    //         const_reverse_iterator &operator-=(int n)
-    //         {
-    //             _base+=n;
-    //             return (*this);
-    //         }
-    //         const_iterator base()const {return (_base);}
-    //     private:
-    //         const_iterator _base;
-    // };
 }

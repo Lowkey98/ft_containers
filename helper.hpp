@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 // #include "vector/vector.hpp"
 namespace ft
 {
@@ -59,9 +60,12 @@ struct pair
     second_type second;
 
     pair() : first(), second(){}
-    ~pair(){}
+
     template<class U, class V>
-    pair (const pair<U,V>& pr) : first(pr.first), second(pr.second) {} 
+    pair (const pair<U,V>& pr) : first(pr.first), second(pr.second)
+    { 
+        // std::cout << " PAIR" << std::endl;
+    } 
 
     pair (const first_type& a, const second_type& b) :first(a), second(b) {}
 

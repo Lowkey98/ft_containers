@@ -1,7 +1,8 @@
 
+#pragma once
+#include<iostream>
 namespace ft
 {
-    
     template <class Iterator>
     class iterator_traits
     {
@@ -23,7 +24,7 @@ namespace ft
             typedef std::random_access_iterator_tag iterator_category;  
     };
     template <class T>
-    class iterator_traits<const T*>
+    class iterator_traits<T const *>
     {
         public:
             typedef std::ptrdiff_t difference_type;
