@@ -1,5 +1,7 @@
 #pragma once
+#include <algorithm>
 #include <iostream>
+#include <stdexcept>
 #include "iterator.hpp"
 #include "../helper.hpp"
 #include "../reverse_iterator.hpp"
@@ -13,11 +15,13 @@ namespace ft
             typedef Allocator allocator_type;
             
             typedef typename allocator_type::reference reference;
+            typedef typename allocator_type::pointer   pointer;
             typedef std::size_t size_type;
             typedef ft::iterator<T> iterator;
-            typedef ft::reverse_iterator<T> reverse_iterator;
+            typedef	typename std::ptrdiff_t		        difference_type;
+            typedef ft::reverse_iterator<iterator> reverse_iterator;
             typedef ft::const_iterator<T> const_iterator;
-            typedef ft::const_reverse_iterator<T> const_reverse_iterator;
+            typedef ft::const_reverse_iterator<const_iterator> const_reverse_iterator;
 		public:
             explicit Vector (const allocator_type& alloc = allocator_type())
             {
@@ -29,6 +33,7 @@ namespace ft
             explicit Vector (size_type n, const value_type& val = value_type(),
                 const allocator_type& alloc = allocator_type())
             {
+                // (void)alloc;
                 _allocator = alloc;
                 _size = n;
                 _capacity = n;
@@ -37,7 +42,7 @@ namespace ft
                     _allocator.construct(&_buff[i],val);
             }
             template <class InputIterator>
-            Vector (InputIterator first, InputIterator last,
+            Vector (InputIterator first, typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type last,
                  const allocator_type& alloc = allocator_type())
             {
                 size_type n = ft::distance(last, first);
@@ -48,15 +53,15 @@ namespace ft
                 for (size_type i = 0; i < n; i++)
                     _allocator.construct(&_buff[i], *(first + i));
             }
-			size_type size(){ return _size;}
-			size_type capacity(){ return _capacity;}
-
+			size_type size()const { return _size;}
+            size_type max_size() const{ return 1;};
+			size_type capacity()const { return _capacity;}
             void    reserve(size_type n)
             {
                 if (n > _capacity)
                 {
                     value_type* 			_tmp;
-                    size_type old_capacity = _capacity;
+                    // size_type old_capacity = _capacity;
                     _capacity = n;
                      // fill tmp with buff content
                     _tmp = _allocator.allocate(n);
@@ -66,7 +71,7 @@ namespace ft
                     for (size_type i = 0; i < _size; i++)
                         _allocator.destroy(&_buff[i]);
                     // if (_buff)
-                    _allocator.deallocate(_buff, old_capacity);
+                    //     _allocator.deallocate(_buff, _capacity);
                     // fill buff
                     _buff = _tmp; 
                 }
@@ -95,8 +100,8 @@ namespace ft
                 }
             }
 
-            reference back(){ return (_buff[_size - 1]);}
-            reference front(){ return (_buff[0]);}
+            reference back() const { return (_buff[_size - 1]);}
+            reference front()const { return (_buff[0]);}
             
             void resize(size_type n, value_type val = value_type())
             {
@@ -144,6 +149,7 @@ namespace ft
             }
             bool empty() const {return _size == 0;}
             reference operator[](size_type n){ return (_buff[n]);}
+            const reference operator[](size_type n)const { return (_buff[n]);}
             void    swap(Vector &x)
             {
                 std::swap(this->_buff, x._buff);
@@ -204,7 +210,7 @@ namespace ft
             }
             void insert(iterator position, size_type n, const value_type& val)
             {
-                int dis = distance(end(), position);
+                int dis = ft::distance(end(), position);
                 if (_size + n > _capacity * 2)
                     reserve(_size + n);
                 while (n--)
@@ -239,6 +245,23 @@ namespace ft
                 _size -= dis;
                 return (first);
             }
+            reference at (size_type n) const
+            {
+                if (n > _size)
+                    throw std::out_of_range("");
+                return this->_buff[n];
+            }
+            allocator_type get_allocator() const
+            {
+                return _allocator;
+            }
+            bool operator==(const Vector &rhs) const {return (this->_size == rhs.size()) && ft::equal(begin(), end(), rhs.begin());}
+            bool operator!=(const Vector &rhs) const {return !(*this == rhs);}
+            bool operator<(const Vector &rhs) const {return std::lexicographical_compare(begin(),end(),rhs.begin(),rhs.end());}
+            bool operator>=(const Vector &rhs) const {return !(*this < rhs);}
+            bool operator>(const Vector &rhs) const {return rhs < *this;}
+            bool operator<=(const Vector &rhs) const {return !(rhs < *this);}
+
         private:
 			Allocator	_allocator;
 			size_type _size;

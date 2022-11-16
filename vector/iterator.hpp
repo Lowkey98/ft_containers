@@ -1,6 +1,6 @@
 #pragma once
 // #include "vector.hpp"
-
+#include <iostream>
 
 namespace ft
 {
@@ -11,9 +11,12 @@ namespace ft
     class iterator
     {
         public:
+            typedef std::random_access_iterator_tag	iterator_category;
             typedef T value_type;
+            typedef	ptrdiff_t		        difference_type;
             typedef T* pointer;
             typedef T& reference;
+
         public:
             iterator(){};
             iterator(value_type *v)
@@ -40,7 +43,7 @@ namespace ft
             template <class it>
             operator const_iterator<it>()
             {
-                return const_iterator<it>();
+                return const_iterator<it>(ptr);
             }
             reference operator*() {return *ptr;}
             pointer operator->() {return ptr;}
@@ -66,27 +69,29 @@ namespace ft
                 ptr--;
                 return (tmp);
             }
-            iterator operator-(int n)
+            iterator operator-(difference_type n) const
             {
                 return(iterator(this->base() - n));
             }
-            iterator operator+(int n)
+            iterator operator+(difference_type n) const
             {
                 return(iterator(this->base() + n));
             }
-            int     operator-(iterator &it) { return (*this->ptr - it.base());}
-            iterator &operator+=(int n)
+            difference_type     operator-(const iterator &it) const { return (this->ptr - it.base());}
+            iterator &operator+=(difference_type n)
             {
                 ptr += n;
                 return (*this);
             }
-            iterator &operator-=(int n)
+            iterator &operator-=(difference_type n)
             {
                 ptr -= n;
                 return (*this);
             }
             reference operator[](int n) {return ptr[n];}
+            reference operator[](int n)const {return ptr[n];}
             pointer base() const{return ptr;}
+            
 
                 
 
@@ -94,14 +99,10 @@ namespace ft
             pointer ptr;
     };
     template<class T>
-    iterator<T> operator+(int n, const iterator<T> &rhs)
+    iterator<T> operator+(typename iterator<T>::difference_type n, const iterator<T> &rhs)
     {
         return rhs + n;
     }
-
-
-
-
 
     template  <class T>
     class const_iterator
@@ -110,6 +111,9 @@ namespace ft
             typedef T   value_type;
             typedef const T*  pointer;
             typedef const T&  reference;
+            typedef	std::ptrdiff_t		        difference_type;
+            typedef std::random_access_iterator_tag	iterator_category;
+
         public:
             const_iterator(){};
             const_iterator(value_type *v)
@@ -156,21 +160,21 @@ namespace ft
                 ptr--;
                 return (tmp);
             }
-            const_iterator operator-(int n)
+            const_iterator operator-(difference_type n)
             {
                 return(const_iterator(this->base() - n));
             }
-            const_iterator operator+(int n)
+            const_iterator operator+(difference_type n)
             {
                 return(const_iterator(this->base() + n));
             }
-            int     operator-(const_iterator &it) { return (*this->ptr - it.base());}
-            const_iterator &operator+=(int n)
+            difference_type     operator-(const_iterator &it) { return (this->ptr - it.base());}
+            const_iterator &operator+=(difference_type n)
             {
                 ptr += n;
                 return (*this);
             }
-            const_iterator &operator-=(int n)
+            const_iterator &operator-=(difference_type n)
             {
                 ptr -= n;
                 return (*this);
@@ -183,9 +187,9 @@ namespace ft
             value_type *ptr;
     };
     template<class T>
-    const_iterator<T> operator+(int n, const const_iterator<T> &rhs)
+    const_iterator<T> operator+(typename const_iterator<T>::difference_type n, const const_iterator<T> &rhs)
     {
-        return rhs + n;
+        return const_iterator<T>(rhs.base() + n);
     }
     // template <class it>
     // bool operator !=(const it &lhs, const it &rhs)

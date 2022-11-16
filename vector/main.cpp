@@ -45,17 +45,39 @@ void pr(std::vector<T> &a)
 int main()
 {
     // {
-    ft::Vector<int> v1;
-    ft::Vector<int> v2;
-    v1.push_back(1);
-    v1.push_back(2);
-    v1.push_back(3);
-    v2.push_back(10);
-    v2.push_back(20);
-    v2.push_back(30);
+        // std::vector<std::string> v1(10, "string2");
+        // std::vector<std::string> const v2(10, "string2");
+        /*-----------------------------------------------------*/
+        /*------------------ ft::vectors ---------------------*/
+        // ft::Vector<std::string> ft_v1(10, "string2");
+        /*----------------------------------------------------*/
+                std::string str, ft_str;
+        /*
+         * var to store the size and the capacity
+         */
+        // ft::Vector<std::string>::size_type s, ft_s;
+        // ft::Vector<std::string>::size_type c, ft_c;
+        ft::Vector<std::string>::iterator ft_it;
+        /*
+         * bool to store the comparison
+         */
+        // bool cond = true;
+        /*------------------ strings to store the results ----*/
+            ft::Vector<std::string> ft_v(20, "string");
 
-    v1.swap(v2);
-    pr(v1);
+            ft_it = ft_v.insert(ft_v.begin() + 10, "hello");
+            ft_it->length();
+            exit(0);
+            str.clear();
+            ft_str.clear();
+
+        // for (std::vector<std::string>::reverse_iterator rit = v1.rbegin(); rit != v1.rend(); ++rit) // fill res from v1
+        //     res += *rit;
+        // for (std::vector<std::string>::const_reverse_iterator rit = v2.rbegin(); rit != v2.rend(); ++rit) // fill c_res from const v1
+        //     c_res += *rit;
+
+        // for (ft::Vector<std::string>::reverse_iterator rit = ft_v1.rbegin(); rit != ft_v1.rend(); ++rit) // fill ft_res from ft_v1
+        //     ft_res += *rit;
         // v.push_back(1);
         // printf("size = %ld\n", v.size());
         // printf("capacity = %ld\n", v.capacity());
