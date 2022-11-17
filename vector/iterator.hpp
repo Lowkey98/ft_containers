@@ -11,11 +11,11 @@ namespace ft
     class iterator
     {
         public:
-            typedef std::random_access_iterator_tag	iterator_category;
-            typedef T value_type;
-            typedef	ptrdiff_t		        difference_type;
-            typedef T* pointer;
-            typedef T& reference;
+            typedef std::random_access_iterator_tag         iterator_category;
+            typedef T                                       value_type;
+            typedef	ptrdiff_t		                        difference_type;
+            typedef T*                                      pointer;
+            typedef T&                                      reference;
 
         public:
             iterator(){};
