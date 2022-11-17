@@ -51,25 +51,26 @@ int main()
         /*------------------ ft::vectors ---------------------*/
         // ft::Vector<std::string> ft_v1(10, "string2");
         /*----------------------------------------------------*/
-                std::string str, ft_str;
+                // std::string str, ft_str;
         /*
          * var to store the size and the capacity
          */
         // ft::Vector<std::string>::size_type s, ft_s;
         // ft::Vector<std::string>::size_type c, ft_c;
-        ft::Vector<std::string>::iterator ft_it;
+            // std::vector<std::string> v(20, "string");
+            // ft::Vector<std::string> ft_v(20, "string");
+
+            // it = v.insert(v.begin() + 10, "hello");
+            // ft_it = ft_v.insert(ft_v.begin() + 10, "hello");
+            // ft_it->length();
         /*
          * bool to store the comparison
          */
         // bool cond = true;
         /*------------------ strings to store the results ----*/
-            ft::Vector<std::string> ft_v(20, "string");
-
-            ft_it = ft_v.insert(ft_v.begin() + 10, "hello");
-            ft_it->length();
-            exit(0);
-            str.clear();
-            ft_str.clear();
+            // // exit(0);
+            // str.clear();
+            // ft_str.clear();
 
         // for (std::vector<std::string>::reverse_iterator rit = v1.rbegin(); rit != v1.rend(); ++rit) // fill res from v1
         //     res += *rit;

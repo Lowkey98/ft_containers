@@ -18,10 +18,44 @@ template<class T>
 struct enable_if<true, T> { typedef T type; };
 
 template <class>
-struct is_integral{static const bool value = true;};
+struct is_integral{static const bool value = false;};
 
 template<>
-struct is_integral<int>{static const bool value = false;};
+struct is_integral<int>{static const bool value = true;};
+template<>
+struct is_integral<char>{static const bool value = true;};
+template<>
+struct is_integral<bool>{static const bool value = true;};
+template<>
+struct is_integral<char16_t>{static const bool value = true;};
+template<>
+struct is_integral<char32_t>{static const bool value = true;};
+template<>
+struct is_integral<wchar_t>{static const bool value = true;};
+template<>
+struct is_integral<signed char>{static const bool value = true;};
+template<>
+struct is_integral<long long int>{static const bool value = true;};
+template<>
+struct is_integral<unsigned char>{static const bool value = true;};
+template<>
+struct is_integral<unsigned long>{static const bool value = true;};
+template<>
+struct is_integral<unsigned int>{static const bool value = true;};
+template <>
+struct is_integral<short>{ static const int value = true; };
+template <>
+struct is_integral<long double>{ static const int value = true; };
+template <>
+struct is_integral<double>{ static const int value = true; };
+template <>
+struct is_integral<float>{ static const int value = true; };
+template <>
+struct is_integral<unsigned long long>{ static const int value = true; };
+template <>
+struct is_integral<long>{ static const int value = true; };
+template <>
+struct is_integral<unsigned short>{ static const int value = true; };
 
 template <class InputIterator1, class InputIterator2>
 bool equal (InputIterator1 first1, InputIterator1 last1,
@@ -36,7 +70,8 @@ bool equal (InputIterator1 first1, InputIterator1 last1,
     }
     return (true);
 }
-bool pred(int i , int j){return i == j;}
+
+// bool pred(int i , int j){return i == j;}
 template <class InputIterator1, class InputIterator2, class BinaryPredicate>
 bool equal (InputIterator1 first1, InputIterator1 last1,
               InputIterator2 first2, BinaryPredicate pred)
@@ -62,10 +97,7 @@ struct pair
     pair() : first(), second(){}
 
     template<class U, class V>
-    pair (const pair<U,V>& pr) : first(pr.first), second(pr.second)
-    { 
-        // std::cout << " PAIR" << std::endl;
-    } 
+    pair (const pair<U,V>& pr) : first(pr.first), second(pr.second) {} 
 
     pair (const first_type& a, const second_type& b) :first(a), second(b) {}
 

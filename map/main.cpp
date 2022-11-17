@@ -157,14 +157,18 @@ int main()
         // ft_foo.swap(ft_bar);
 
         // cond = cond && foo.size() == ft_foo.size() && bar.size() == ft_bar.size() && compareMaps(foo.begin(), foo.end(), ft_foo.begin(), ft_foo.end()) && compareMaps(bar.begin(), bar.end(), ft_bar.begin(), ft_bar.end());
+        ft::Map<int,int>    m1;
+        m1.insert(ft::pair<int, int>(1,2));
+        m1.insert(ft::pair<int, int>(2,2));
 
-        ft::Map<int, int> m1;
-        m1.insert(ft::pair<int,int>(1,1));
-        m1.insert(ft::pair<int,int>(3,1));
-        m1.insert(ft::pair<int,int>(5,1));
-        m1.insert(ft::pair<int,int>(2,1));
-        std::cout << (*m1.upper_bound(1)).first << std::endl;
-        std::cout << (*m1.lower_bound(1)).first << std::endl;
+        ft::Map<int,int> m;
+        m.insert(ft::pair<int, int>(1,2));
+
+        m = m1;
+        for (ft::Map<int, int>::iterator it = m1.begin(); it != m1.end(); it++)
+            std::cout << (*it).first << std::endl;
+        std::cout << "size=" << m.size() << std::endl;
+        std::cout << "size=" << m1.size() << std::endl;
         // std::map<std::string, std::string, std::greater<std::string> > m1, m2;
         // ft::Map<std::string, std::string, std::greater<std::string> > ft_m1, ft_m2;
 

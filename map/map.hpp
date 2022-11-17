@@ -1,16 +1,18 @@
 #pragma once
+#include <algorithm>
 #include <cstdlib>
 #include <functional>
 #include "../helper.hpp"
 #include "map_iterator.hpp"
+#include "avl.hpp"
 #include "../reverse_iterator.hpp"
-// #include "../vector/vector.hpp"
+#include "../vector/vector.hpp"
 namespace ft
 {
-	template < class Key,                                     // map::key_type
-			class T,                                       // map::mapped_type
-			class Compare = std::less<Key>,                     // map::key_compare
-			class Alloc = std::allocator<ft::pair<const Key,T> >    // map::allocator_type
+	template <class Key,                                     
+			class T,                                      
+			class Compare = std::less<Key>,                    
+			class Alloc = std::allocator<ft::pair<const Key,T> >
 			> class Map
 	{
 
@@ -21,12 +23,12 @@ namespace ft
 			typedef Alloc							                        allocator_type;
 			typedef ft::pair<const Key, T>						                value_type;
 			typedef Tree<Key, T, Compare, Alloc>		                    Tree;
-            typedef map_iterator<Key, T, Tree>					            iterator;
-            typedef reverse_iterator<iterator>					            reverse_iterator;
 			typedef size_t							                        size_type;
             typedef Node<value_type>				                        Node;
+            typedef map_iterator<Key, T, Tree>					            iterator;
             typedef const_map_iterator<Key, T, Tree>                        const_iterator;
-            typedef const_reverse_iterator<const_iterator>					const_reverse_iterator;
+            typedef reverse_iterator<const_iterator>					    const_reverse_iterator;
+            typedef reverse_iterator<iterator>					            reverse_iterator;
             class value_compare
             {
                 friend class map;
@@ -43,18 +45,14 @@ namespace ft
                         return comp(x.first, y.first);
                     }
             };
-		private:
 			Tree				_tree;
+		private:
             key_compare												_compare;
             allocator_type											_allocator;
-        // private:
-
 		public:
 			explicit Map (const key_compare& comp = key_compare(),
               const allocator_type& alloc = allocator_type()) : _tree(comp, alloc) , _compare(comp), _allocator(alloc)
 			  {
-                //temp 
-                
               }
             Map (const Map& x) : _tree(x.key_comp(), x.get_allocator()), _compare(x.key_comp()), _allocator(x.get_allocator())
             {
@@ -67,15 +65,15 @@ namespace ft
     
 				while (first != last)
 				{
-                    // std::cout << "HELLO" << std::endl;
 					insert(*first);
-                    // break;
 					first++;
 				}
 			}
             Map & operator= (const Map &rhs) 
             {
-                this->_tree = rhs._tree;
+                clear();
+                this->_allocator = rhs._allocator;
+                this->_compare   = rhs._compare;
                 this->insert(rhs.begin(), rhs.end());
                 return (*this);
             }
@@ -95,17 +93,10 @@ namespace ft
             }
             ft::pair<iterator,bool> insert (const value_type& val)
             {
-                // if (_tree.search(val.first))
-                //     return ft::make_pair(iterator(&_tree, NULL), false);
-                // std::cout << "INSERT VALUE" << std::endl;
-                // exit(0);
                 unsigned int  old_size = _tree.size;
                 _tree.insert(val);
                 if (_tree.size == old_size) 
                     return ft::make_pair(iterator(&_tree, _tree.inserted_node), false);
-                // size++;
-                // exit(0);
-                // return ft::make_pair(iterator(NULL, NULL), true);
                 return ft::make_pair(iterator(&_tree, _tree.inserted_node), true);
             }
             iterator insert (iterator position, const value_type& val)
@@ -116,16 +107,9 @@ namespace ft
             template <class InputIterator>
             void insert (InputIterator first, InputIterator last)
             {
-                // int i = 0;
-
-                // while (i != 1)
                 while (first != last)
                 {
-
-                    // exit(1);
-                    // std::cout << (*first).first << std::endl;
                     this->insert(*first);
-                    // i++;
                     first++;
                 }
             }
@@ -146,23 +130,18 @@ namespace ft
             }
             void erase (iterator first, iterator last)
             {
-                std::vector<key_type> v1;
+                ft::Vector<key_type> v1;
                 while (first != last)
                 {
                     v1.push_back((*first).first);
-                    // erase(first);
                     first++;
                 }
-                for (typename std::vector<key_type>::iterator it = v1.begin(); it != v1.end(); it++)
+                for (typename ft::Vector<key_type>::iterator it = v1.begin(); it != v1.end(); it++)
                     erase(*it);
-                // {}
             }
             void    clear()
             {
-                // std::cout << _tree.root->data.first << std::endl;
-                _tree.post_order(&Tree::clear_node);
-                _tree.size = 0;
-
+                _tree.clear();
             }
             iterator begin()
             {
@@ -170,8 +149,7 @@ namespace ft
                 {
                     return iterator(&_tree, _tree.dummy_node);
                 }
-                    // std::cout << "HELO" << std::endl;
-                return (iterator(&_tree, _tree.min_value_node()));
+                return iterator(&_tree, _tree.min_value_node());
             }
             const_iterator begin() const
             {
@@ -243,8 +221,6 @@ namespace ft
                     return end();
                 return const_iterator(&_tree, upper_bound);
             }
-
-
             ft::pair<iterator,iterator> equal_range (const key_type& k)
             {
                 return (ft::make_pair(lower_bound(k), upper_bound(k)));
@@ -299,7 +275,7 @@ namespace ft
 	template <class Key, class T, class Compare, class Alloc>
 	bool	operator < (const Map<Key, T, Compare, Alloc>& lhs, const Map<Key, T, Compare, Alloc>& rhs)
 	{
-		return (std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+		return (std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(),rhs.end()));
 	}
 
 	template <class Key, class T, class Compare, class Alloc>

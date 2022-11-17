@@ -137,7 +137,7 @@ namespace ft
             bool operator>=(const const_iterator &it) {return (this->ptr >= it.base());}
             bool operator>(const const_iterator &it) {return (this->ptr > it.base());}
             reference operator*() {return *ptr;}
-            pointer operator->() {return ptr;}
+            pointer operator->() const{return ptr;}
             const_iterator operator ++()
             {
                 ptr++;
