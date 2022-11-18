@@ -8,7 +8,7 @@
 #include "../reverse_iterator.hpp"
 namespace ft
 {
-  template <class T, class Allocator = std::allocator<T> >  
+	template <class T, class Allocator = std::allocator<T> >  
 	class vector
 	{
 		public:
@@ -23,63 +23,63 @@ namespace ft
 			typedef ft::reverse_iterator<const_iterator>    const_reverse_iterator;
 			typedef	typename std::ptrdiff_t					        difference_type;
 		public:
-      explicit vector (const allocator_type& alloc = allocator_type())
-      {
-        _allocator = alloc;
-        _buff = NULL;
-        _size = 0;
-        _capacity = 0;
-      }
-      explicit vector (size_type n, const value_type& val = value_type(),
-        const allocator_type& alloc = allocator_type())
-      {
-        _allocator = alloc;
-        _size = n;
-        _capacity = n;
-        _buff = _allocator.allocate(n);
-        for (size_type i = 0; i < n; i++)
-          _allocator.construct(&_buff[i],val);
-      }
-      template <class InputIterator>
-      vector (InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last,
-        const allocator_type& alloc = allocator_type())
-      {
-        size_type n = ft::distance(last, first);
-        _size = n;
-        _capacity = n;
-        _allocator = alloc;
-        _buff = _allocator.allocate(n);
-        for (size_type i = 0; i < n; i++)
-          _allocator.construct(&_buff[i], *(first + i));
-      }
-      ~vector()
-      {
-        for (size_type	i = 0; i < this->_size; i++)
-          this->_allocator.destroy(this->_buff + i);
-        this->_allocator.deallocate(this->_buff, this->_capacity);
-      }
-      vector(vector const & x)
-        :  _allocator(x._allocator), _size(x._size), _capacity(x._size),_buff()
-      {
-        this->_buff = this->_allocator.allocate(this->_size);
-        for (size_type i = 0; i < this->_size; i++) {
-          this->_allocator.construct(this->_buff + i, *(x._buff + i));
-        }
-      }
-      vector& operator=(vector const & x)
-      {
-        this->clear();
-        this->_allocator.deallocate(this->_buff, this->_capacity);
+			explicit vector (const allocator_type& alloc = allocator_type())
+			{
+				_allocator = alloc;
+				_buff = NULL;
+				_size = 0;
+				_capacity = 0;
+			}
+			explicit vector (size_type n, const value_type& val = value_type(),
+				const allocator_type& alloc = allocator_type())
+			{
+				_allocator = alloc;
+				_size = n;
+				_capacity = n;
+				_buff = _allocator.allocate(n);
+				for (size_type i = 0; i < n; i++)
+					_allocator.construct(&_buff[i],val);
+			}
+			template <class InputIterator>
+			vector (InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last,
+				const allocator_type& alloc = allocator_type())
+			{
+				size_type n = ft::distance(last, first);
+				_size = n;
+				_capacity = n;
+				_allocator = alloc;
+				_buff = _allocator.allocate(n);
+				for (size_type i = 0; i < n; i++)
+					_allocator.construct(&_buff[i], *(first + i));
+			}
+			~vector()
+			{
+				for (size_type	i = 0; i < this->_size; i++)
+					this->_allocator.destroy(this->_buff + i);
+				this->_allocator.deallocate(this->_buff, this->_capacity);
+			}
+			vector(vector const & x)
+				:  _allocator(x._allocator), _size(x._size), _capacity(x._size),_buff()
+			{
+				this->_buff = this->_allocator.allocate(this->_size);
+				for (size_type i = 0; i < this->_size; i++) {
+					this->_allocator.construct(this->_buff + i, *(x._buff + i));
+				}
+			}
+			vector& operator=(vector const & x)
+			{
+				this->clear();
+				this->_allocator.deallocate(this->_buff, this->_capacity);
 
-        this->_size = this->_capacity = x._size;
-        this->_buff = this->_allocator.allocate(this->_size);
+				this->_size = this->_capacity = x._size;
+				this->_buff = this->_allocator.allocate(this->_size);
 
-        for (size_type i = 0; i < this->_size; i++) {
-          this->_allocator.construct(this->_buff + i, *(x._buff + i));
-        }
+				for (size_type i = 0; i < this->_size; i++) {
+					this->_allocator.construct(this->_buff + i, *(x._buff + i));
+				}
 
-        return (*this);
-      }
+				return (*this);
+			}
 			size_type size()const { return _size;}
 			size_type max_size() const{ return _allocator.max_size() ;};
 			size_type capacity()const { return _capacity;}
@@ -234,19 +234,14 @@ namespace ft
 					return (begin());
 				}
 				int dis = ft::distance(end(), position);
-				// std::cout << dis << std::endl;
 				if (_capacity == _size )
 					this->reserve(_capacity * 2);
 				for (int i = 0; i != dis; i++)
-					_buff[_size - i] = _buff[_size - i - 1];
+					_allocator.construct(&_buff[_size - i], _buff[_size - i - 1]);
 				_allocator.construct(&_buff[_size - dis], val);
 				_size++;
-				// std::cout << "INSERTTTT " << std::endl;
 				return end() - dis - 1;
 				return (this->begin() + pos_index);
-
-				// this->make_places_to_new_elements(pos_index);
-				// this->_allocator.construct(this->_buff + pos_index, val);
 			}
 			void insert(iterator position, size_type n, const value_type& val)
 			{
@@ -309,6 +304,7 @@ namespace ft
 			value_type* 			_buff;
 	};
 }
+
 template <class T, class Alloc> 
 void swap (ft::vector<T,Alloc>& x, ft::vector<T,Alloc>& y)
 {
