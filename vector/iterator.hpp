@@ -1,5 +1,4 @@
 #pragma once
-// #include "vector.hpp"
 #include <iostream>
 
 namespace ft
@@ -16,7 +15,6 @@ namespace ft
             typedef	ptrdiff_t		                        difference_type;
             typedef T*                                      pointer;
             typedef T&                                      reference;
-
         public:
             iterator(){};
             iterator(value_type *v)
@@ -38,8 +36,7 @@ namespace ft
             bool operator<(const iterator &it) {return (this->ptr < it.base());}
             bool operator<=(const iterator &it) {return (this->ptr <= it.base());}
             bool operator>=(const iterator &it) {return (this->ptr >= it.base());}
-            bool operator>(const iterator &it) {return (this->ptr > it.base());}
-            
+            bool operator>(const iterator &it) {return (this->ptr > it.base());}   
             template <class it>
             operator const_iterator<it>()
             {
@@ -91,10 +88,6 @@ namespace ft
             reference operator[](int n) {return ptr[n];}
             reference operator[](int n)const {return ptr[n];}
             pointer base() const{return ptr;}
-            
-
-                
-
         private:
             pointer ptr;
     };
@@ -113,7 +106,6 @@ namespace ft
             typedef const T&  reference;
             typedef	std::ptrdiff_t		        difference_type;
             typedef std::random_access_iterator_tag	iterator_category;
-
         public:
             const_iterator(){};
             const_iterator(value_type *v)
@@ -181,8 +173,6 @@ namespace ft
             }
             reference operator[](int n) {return ptr[n];}
             value_type *base() const{return ptr;}
-            
-
         private:
             value_type *ptr;
     };
@@ -191,15 +181,4 @@ namespace ft
     {
         return const_iterator<T>(rhs.base() + n);
     }
-    // template <class it>
-    // bool operator !=(const it &lhs, const it &rhs)
-    // {
-    //     return (lhs.get_ptr() != rhs.get_ptr());
-    // }
-    // template <class it>
-    // bool operator ==(const it &lhs, const it &rhs)
-    // {
-    //     return (lhs.get_ptr() == rhs.get_ptr());
-    // }
-
 }

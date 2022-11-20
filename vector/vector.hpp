@@ -252,8 +252,6 @@ namespace ft
 			void insert(iterator position, size_type n, const value_type& val)
 			{
 				difference_type index = std::distance(begin(), position);
-				// std::cout << shift_dis << std::endl;
-				// std::cout << index << std::endl;
 				if (_size + n > _capacity)
 					(_size + n > _capacity * 2) ? reserve(_size + n) : reserve(_capacity * 2);
 				shift_array_elements(index, n);
@@ -322,7 +320,6 @@ namespace ft
 			bool operator>=(const vector &rhs) const {return !(*this < rhs);}
 			bool operator>(const vector &rhs) const {return rhs < *this;}
 			bool operator<=(const vector &rhs) const {return !(rhs < *this);}
-
 		private:
 			allocator_type	_allocator;
 			size_type _size;
