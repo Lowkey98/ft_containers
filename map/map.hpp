@@ -46,30 +46,28 @@ namespace ft
                         return comp(x.first, y.first);
                     }
             };
-			Tree				_tree;
 		private:
+			Tree				                                    _tree;
             key_compare												_compare;
             allocator_type											_allocator;
 		public:
 			explicit map (const key_compare& comp = key_compare(),
-              const allocator_type& alloc = allocator_type()) : _tree(comp, alloc) , _compare(comp), _allocator(alloc)
-			  {
-              }
+                const allocator_type& alloc = allocator_type()) : _tree(comp, alloc) , _compare(comp), _allocator(alloc) {}
             map (const map& x) : _tree(x.key_comp(), x.get_allocator()), _compare(x.key_comp()), _allocator(x.get_allocator())
             {
                 insert(x.begin(), x.end());
             }
             template <class InputIterator>
-            map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(),
-			const allocator_type& alloc = allocator_type()) : _tree(comp, alloc)
-			{	
-    
-				while (first != last)
-				{
-					insert(*first);
-					first++;
-				}
-			}
+                map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(),
+                const allocator_type& alloc = allocator_type()) : _tree(comp, alloc)
+                {	
+        
+                    while (first != last)
+                    {
+                        insert(*first);
+                        first++;
+                    }
+                }
             map & operator= (const map &rhs) 
             {
                 clear();
@@ -141,9 +139,6 @@ namespace ft
                 {
                     erase(*it);
                 }
-          
-                // ~v1();
-                // v1.clear();
             }
             void    clear()
             {
@@ -287,7 +282,7 @@ namespace ft
 	template <class Key, class T, class Compare, class Alloc>
 	bool	operator >= (const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compare, Alloc>& rhs)
 	{
-			return (!(lhs < rhs));
+		return (!(lhs < rhs));
 	}
 
 	template <class Key, class T, class Compare, class Alloc>

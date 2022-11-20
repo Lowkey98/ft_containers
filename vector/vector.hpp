@@ -296,7 +296,6 @@ namespace ft
 			iterator    erase(iterator first, iterator last)
 			{
 				int dis = ft::distance(last, first);
-				// int dis1 = ft::distance(first, begin());
 				for (iterator i = first; i != last; i++)
 					_allocator.destroy(&(*i));
 				for (iterator i = last; i != end(); i++)

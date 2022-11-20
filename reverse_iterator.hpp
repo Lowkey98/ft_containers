@@ -1,10 +1,8 @@
 
 #pragma once
 #include "iterator_traits.hpp"
-namespace ft {
-    // template <class iterator>
-    // class const_reverse_iterator;
-
+namespace ft
+{
     template <class iterator>
     class reverse_iterator
     {
@@ -15,14 +13,6 @@ namespace ft {
             typedef	typename iterator_traits<iterator>::pointer				pointer;
             typedef	typename iterator_traits<iterator>::reference			reference;
             typedef	typename iterator_traits<iterator>::difference_type		difference_type;
-
-            // typedef Key									key_type;
-            // typedef T									mapped_type;
-            // typedef ft::pair<const Key, T>				value_type;
-            // typedef Tree<Key, T>                        Tree;
-            // typedef typename iterator::value_type       value_type;
-            // typedef Node<value_type>					Node;
-            // typedef iterator<Key, T>	                iterator;
         private:
             iterator base_it;
         public:

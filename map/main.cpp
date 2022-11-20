@@ -1,13 +1,6 @@
-//
-// Created by moboustt on 19/8/2021.
-//
-
-// you should include your path to this files
-
 #include "../map/map.hpp"       // your map path.
 #include "../vector/vector.hpp" // your Vector path.
 #include "../helper.hpp"  // path to ft::pair.
-// #include "map-test-helper.hpp"
 #include <map>
 
 #include <vector>

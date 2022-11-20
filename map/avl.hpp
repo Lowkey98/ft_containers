@@ -98,12 +98,12 @@ class Tree
 					lower_bound = tmp;
 					break ;
 				}
-				if (_compare(key, tmp->data.first) == true) // move to left
+				if (_compare(key, tmp->data.first) == true)
 				{
 					lower_bound = tmp;
 					tmp = tmp->left;
 				}
-				else // move to right
+				else
 					tmp = tmp->right;
 			}
 			return (lower_bound);
@@ -115,12 +115,12 @@ class Tree
 
 			while (tmp != NULL)
 			{
-				if (_compare(key, tmp->data.first) == true) // move to left
+				if (_compare(key, tmp->data.first) == true)
 				{
 					upper_bound = tmp;
 					tmp = tmp->left;
 				}
-				else // move to right
+				else
 					tmp = tmp->right;
 			}
 			return (upper_bound);
@@ -165,12 +165,9 @@ class Tree
 		{
 			Node *y = x->right;
 			Node *T2 = y->left;
-		
-			// Perform rotation
+			
 			y->left = x;
 			x->right = T2;
-		
-			// Update heights
 			x->height = max(height(x->left), height(x->right)) + 1;
 			y->height = max(height(y->left), height(y->right)) + 1;
 			return y;
@@ -226,7 +223,6 @@ class Tree
 			else if (_compare(root->data.first, key))
 			{
 				root->right = delete_node(root->right, key);
-
 			}
 			else
 			{
@@ -235,7 +231,6 @@ class Tree
 					_node_allocator.destroy(root);
 					_node_allocator.deallocate(root, 1);
 					return NULL;
-
 				}
 				else if (root->left == NULL)
 				{
@@ -365,32 +360,22 @@ class Tree
 				Node *succ = NULL;
 				while (true)
 				{
-					// if the node is greater than key, go to left subtree
 					if (_compare(key, root->data.first))
 					{
-						// update successor to current node
 						succ = root;
 						root = root->left;
 					}
-					// if the node is less than the key, go to right subtree
 					else if (_compare(root->data.first, key))
 						root = root->right;
-					// if node has same value as the key, 
-					// then its successor is minimum value node in its right subtree
 					else
 					{
 						if (root->right != NULL)
 							succ = min_value_node(root->right);
 						break;
 					}
-
-					// key doesn't exist in binary tree
-					// if (root == NULL)
-					//     return dummy_node;            
 				}
 				if (succ == NULL)
 					return dummy_node;
-				// return Successor
 				return succ;
 			}
 		Node* find_predecessor(Node *rt, key_type key) const
@@ -398,31 +383,22 @@ class Tree
 			Node* pred = NULL;
 			while (true)
 			{
-			// if node value is greater than key, go to left subtree
-			if (_compare(key, rt->data.first))
-				rt = rt->left;
-			// if node value is less than key, go to right subtree
-			else if (_compare(rt->data.first, key))
-			{
-				// update predecessor to current node
-				pred = rt;
-				rt = rt->right;
+				if (_compare(key, rt->data.first))
+					rt = rt->left;
+				else if (_compare(rt->data.first, key))
+				{
+					pred = rt;
+					rt = rt->right;
+				}
+				else
+				{
+					if (rt->left!= NULL)
+						pred = max_value_node(rt->left);
+					break;
+				}
+				if (rt == NULL)
+					return NULL;
 			}
-
-			// if node has same value as the key, 
-			// then its predecessor is greatest value node in its left subtree
-			else
-			{
-				if (rt->left!= NULL)
-					pred = max_value_node(rt->left);
-				break;
-			}
-			// if key doesn't exist in binary tree
-			if (rt == NULL)
-				return NULL;
-			}
-			// return predecessor if any
 			return pred;
 		}
-
 };
