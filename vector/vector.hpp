@@ -1,6 +1,9 @@
 #pragma once
 #include <algorithm>
+#include <cassert>
+#include <cstddef>
 #include <iostream>
+#include <iterator>
 #include <stdexcept>
 #include <utility>
 #include "iterator.hpp"
@@ -61,6 +64,8 @@ namespace ft
 			vector(vector const & x)
 				:  _allocator(x._allocator), _size(x._size), _capacity(x._size),_buff()
 			{
+				if (_capacity == 0)
+					return; 
 				this->_buff = this->_allocator.allocate(this->_size);
 				for (size_type i = 0; i < this->_size; i++) {
 					this->_allocator.construct(this->_buff + i, *(x._buff + i));
@@ -92,9 +97,10 @@ namespace ft
 				{
 					value_type*     _tmp = _allocator.allocate(n);
 					for (size_type i = 0; i < _size; i++)
+					{
 						_allocator.construct(&_tmp[i], _buff[i]);
-					for (size_type i = 0; i < _size; i++)
 						_allocator.destroy(&_buff[i]);
+					}
 					_allocator.deallocate(_buff, _capacity);
 					_capacity = n;
 					_buff = _tmp;
@@ -245,21 +251,41 @@ namespace ft
 			}
 			void insert(iterator position, size_type n, const value_type& val)
 			{
-				int dis = ft::distance(end(), position);
-				if (_size + n > _capacity * 2)
-					reserve(_size + n);
-				while (n--)
-					insert(end() - dis, val);
+				difference_type index = std::distance(begin(), position);
+				// std::cout << shift_dis << std::endl;
+				// std::cout << index << std::endl;
+				if (_size + n > _capacity)
+					(_size + n > _capacity * 2) ? reserve(_size + n) : reserve(_capacity * 2);
+				shift_array_elements(index, n);
+				this->_size += n;
+				for (size_type i = index; i != index + n; i++)
+				{
+					_allocator.construct(&_buff[i], val);
+				}
+			}
+			void shift_array_elements(difference_type index, size_type shift_dis)
+			{
+				for(difference_type i = _size - 1;i >= index; i--)
+				{
+					_allocator.construct(&_buff[i + shift_dis],_buff[i]);
+					_allocator.destroy(&_buff[i]);
+				}
 			}
 			template <class InputIterator>
 			void insert (iterator position, typename ft::enable_if<!ft::is_integral<InputIterator>::value,InputIterator>::type first, InputIterator last)
 			{
-				int dis = ft::distance(end(), position);
-				int n = ft::distance(last, first);
-				if (_size + n > _capacity * 2)
-					reserve(_size + n);
-				for (InputIterator i = first; i != last; i++)
-					insert(end() - dis, *i);
+				size_type shift_dis = std::distance(first, last);
+				difference_type index = std::distance(begin(), position);
+
+				if (_size + shift_dis > _capacity)
+					(_size + shift_dis > _capacity * 2) ? reserve(_size + shift_dis) : reserve(_capacity * 2);
+				shift_array_elements(index, shift_dis);
+				for (unsigned int i = index; i < shift_dis + index; i++)
+				{
+					_allocator.construct(&_buff[i], *first);
+					first++;
+				}
+				_size += shift_dis;
 			}
 			iterator    erase(iterator position)
 			{

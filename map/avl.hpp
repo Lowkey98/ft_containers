@@ -234,7 +234,6 @@ class Tree
 				{
 					_node_allocator.destroy(root);
 					_node_allocator.deallocate(root, 1);
-					std::cout << "TEST" << std::endl;
 					return NULL;
 
 				}
@@ -331,7 +330,6 @@ class Tree
 			{
 				if (node == dummy_node || node == NULL)
 				{
-					// std::cout << "TEST" << std::endl;
 					return NULL;
 				}
 				return (find_successor(_root, node->data.first));

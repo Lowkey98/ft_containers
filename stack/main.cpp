@@ -1,3 +1,15 @@
+/* ************************************************************************************************ */
+/*                                                                                                  */
+/*                                                        :::   ::::::::   ::::::::  :::::::::::    */
+/*   stack_tests.cpp                                   :+:+:  :+:    :+: :+:    :+: :+:     :+:     */
+/*                                                      +:+         +:+        +:+        +:+       */
+/*   By: mamoussa <mamoussa@student.1337.ma>           +#+      +#++:      +#++:        +#+         */
+/*                                                    +#+         +#+        +#+      +#+           */
+/*   Created: 2021/10/12 12:45:02 by mamoussa        #+#  #+#    #+# #+#    #+#     #+#             */
+/*   Updated: 2021/10/12 12:45:02 by mamoussa     ####### ########   ########      ###.ma           */
+/*                                                                                                  */
+/* ************************************************************************************************ */
+
 // you should include your path to this files
 #include "../stack/stack.hpp"       // your stack path.
 #include "../vector/vector.hpp" // your Vector path.
@@ -23,13 +35,12 @@
 
 
 #define TEST_CASE(fn)                                                                                                             \
-    cout << GREEN << "\t======================================================================================" << RESET << endl; \
-    cout << endl;                                                                                                                 \
-    cout << BLUE << "\t   Running " << #fn << " ... \t\t\t\t\t\t" << RESET << std::endl;                                          \
+    std::cout << GREEN << "\t======================================================================================" << RESET << std::endl; \
+    std::cout << std::endl;                                                                                                                 \
+    std::cout << BLUE << "\t   Running " << #fn << " ... \t\t\t\t\t\t" << RESET << std::endl;                                          \
     fn();                                                                                                                         \
-    cout << endl;                                                                                                                 \
-    cout << GREEN << "\t======================================================================================" << RESET << endl;
-using namespace std;
+    std::cout << std::endl;                                                                                                                 \
+    std::cout << GREEN << "\t======================================================================================" << RESET << std::endl;
 
 time_t get_time(void)
 {
