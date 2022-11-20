@@ -7,6 +7,7 @@
 #include "avl.hpp"
 #include "../reverse_iterator.hpp"
 #include "../vector/vector.hpp"
+#include<vector>
 namespace ft
 {
 	template <class Key,                                     
@@ -130,14 +131,20 @@ namespace ft
             }
             void erase (iterator first, iterator last)
             {
-                ft::vector<key_type> v1;
+                std::vector<key_type> v1;
                 while (first != last)
                 {
                     v1.push_back((*first).first);
                     first++;
                 }
-                for (typename ft::vector<key_type>::iterator it = v1.begin(); it != v1.end(); it++)
+                for (typename std::vector<key_type>::iterator it = v1.begin(); it != v1.end(); it++)
+                {
                     erase(*it);
+                    std::cout << "a" << std::endl;
+                }
+          
+                // ~v1();
+                // v1.clear();
             }
             void    clear()
             {

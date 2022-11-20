@@ -224,11 +224,20 @@ class Tree
 			if (_compare(key, root->data.first))
 				root->left = delete_node(root->left, key);
 			else if (_compare(root->data.first, key))
+			{
 				root->right = delete_node(root->right, key);
+
+			}
 			else
 			{
 				if (root->left == NULL && root->right==NULL)
+				{
+					_node_allocator.destroy(root);
+					_node_allocator.deallocate(root, 1);
+					std::cout << "TEST" << std::endl;
 					return NULL;
+
+				}
 				else if (root->left == NULL)
 				{
 					Node* temp = root->right;

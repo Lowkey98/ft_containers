@@ -235,11 +235,11 @@ void iterator_tests(void) {
       int myints[] = {12, 82, 37, 64, 15};
       ft::map<int, int> m;
       m.insert(ft::make_pair(myints[0], 0));
-      // m.insert(ft::make_pair(myints[1], 1));
-      // exit(1);
+      m.insert(ft::make_pair(myints[1], 1));
+      exit(1);
 
-      // for (size_t i = 0; i < 5; ++i)
-      // m.insert(ft::make_pair(myints[i], i));
+      for (size_t i = 0; i < 5; ++i)
+      m.insert(ft::make_pair(myints[i], i));
       for (ft::map<int, int>::iterator it = m.begin(); it != m.end(); ++it)
         res += it->first;
       cond = res == 210;
@@ -1472,7 +1472,13 @@ void testModifiers() {
     cond = cond && m.empty() == ft_m.empty() &&
            compareMaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
 
-    /* ---------- Testing some edge cases ---------- */
+
+
+
+
+
+
+  //   /* ---------- Testing some edge cases ---------- */
 
     std::map<int, std::string> m2;
     ft::map<int, std::string> ft_m2;
@@ -2392,24 +2398,25 @@ int main() {
   TEST_CASE(testModifiers)
   std::cout << std::endl;
 
-  std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
-  TEST_CASE(testObservers)
-  std::cout << std::endl;
+  // // std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
+  // // TEST_CASE(testObservers)
+  // // std::cout << std::endl;
 
-  std::cout << YELLOW << "Testing Operations Methods;" << RESET << std::endl;
-  TEST_CASE(testOperations)
-  std::cout << std::endl;
+  // // std::cout << YELLOW << "Testing Operations Methods;" << RESET << std::endl;
+  // // TEST_CASE(testOperations)
+  // // std::cout << std::endl;
 
-  std::cout << YELLOW << "Testing Allocator Methods;" << RESET << std::endl;
-  TEST_CASE(testAllocatorMethodes)
-  std::cout << std::endl;
+  // // std::cout << YELLOW << "Testing Allocator Methods;" << RESET << std::endl;
+  // // TEST_CASE(testAllocatorMethodes)
+  // // std::cout << std::endl;
 
-  std::cout << YELLOW << "Testing Retional Operators; " << RESET << std::endl;
-  TEST_CASE(testRetionalOperators);
-  std::cout << std::endl;
+  // // std::cout << YELLOW << "Testing Retional Operators; " << RESET << std::endl;
+  // // TEST_CASE(testRetionalOperators);
+  // // std::cout << std::endl;
 
-  std::cout << YELLOW << "Testing Non-Member Swap  ; " << RESET << std::endl;
-  TEST_CASE(testNonMemberSwap);
-  std::cout << std::endl;
+  // // std::cout << YELLOW << "Testing Non-Member Swap  ; " << RESET << std::endl;
+  // // TEST_CASE(testNonMemberSwap);
+  // // std::cout << std::endl;
+  while(1);
   return 0;
 }
