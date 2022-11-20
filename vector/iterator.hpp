@@ -36,7 +36,14 @@ namespace ft
             bool operator<(const iterator &it) {return (this->ptr < it.base());}
             bool operator<=(const iterator &it) {return (this->ptr <= it.base());}
             bool operator>=(const iterator &it) {return (this->ptr >= it.base());}
-            bool operator>(const iterator &it) {return (this->ptr > it.base());}   
+            bool operator>(const iterator &it) {return (this->ptr > it.base());} 
+            
+            bool operator==(const const_iterator<T> &it) {return (this->ptr == it.base());}
+            bool operator!=(const const_iterator<T> &it) {return (this->ptr != it.base());}
+            bool operator<(const const_iterator<T> &it) {return (this->ptr < it.base());}
+            bool operator<=(const const_iterator<T> &it) {return (this->ptr <= it.base());}
+            bool operator>=(const const_iterator<T> &it) {return (this->ptr >= it.base());}
+            bool operator>(const const_iterator<T> &it) {return (this->ptr > it.base());}    
             template <class it>
             operator const_iterator<it>()
             {
