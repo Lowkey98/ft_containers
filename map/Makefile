@@ -1,4 +1,4 @@
-CC = clang++
+CC = c++
 SRC = main.cpp
 HEADER = avl.hpp map_iterator.hpp map.hpp
 FLAGS = -Wall -Wextra -Werror -std=c++98
