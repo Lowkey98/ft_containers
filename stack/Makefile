@@ -7,7 +7,7 @@ FLAGS_DEBUG = --std=c++98 -Wall -Wextra -Werror -fsanitize=address -g3
 
 all: $(NAME)
 
-$(NAME): $(SRC)
+$(NAME): $(SRC) $(HEADER)
 	$(CC) $(FLAGS) $(SRC) -o $(NAME)
 
 clean:
