@@ -332,6 +332,5 @@ int main()
 
     std::cout << YELLOW << "Testing relational operators;" << RESET << std::endl;
     TEST_CASE(testRelationalOperators);
-    while(1);
 	return 0;
 }
